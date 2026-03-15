@@ -62,31 +62,41 @@ export default function UsersPage() {
     fetchUsers();
   }, [user]);
 
-  const handleToggleStatus = async (userId: string, currentStatus: string) => {
-    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-
+  const handleToggleStatus = async (userId: string, isSuspended: boolean) => {
     try {
-      const supabase = createClient();
-      const { error } = await supabase
+      const endpoint = isSuspended ? '/api/users/activate' : '/api/users/suspend'
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'エラーが発生しました')
+      }
+
+      const supabase = createClient()
+      const { data, error } = await supabase
         .from('profiles')
-        .update({ status: newStatus })
-        .eq('id', userId);
+        .select('*')
+        .order('created_at', { ascending: false })
 
-      if (error) throw error;
+      if (error) throw error
+      setUsers(data || [])
 
-      setUsers((prev) =>
-        prev.map((u) => (u.id === userId ? { ...u, status: newStatus as any } : u))
-      );
-
-      toast({ title: 'success', description: 'ユーザーを更新しました' });
+      toast({
+        title: 'success',
+        description: isSuspended ? 'ユーザーを有効化しました' : 'ユーザーを停止しました',
+      })
     } catch (error) {
       toast({
         title: 'エラー',
         description: error instanceof Error ? error.message : 'エラーが発生しました',
         variant: 'destructive',
-      });
+      })
     }
-  };
+  }
 
   const handleUserAdded = async () => {
     const supabase = createClient();
@@ -125,7 +135,7 @@ export default function UsersPage() {
       u.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const activeCount = users.filter((u) => u.status === 'active').length;
+  const activeCount = users.length;
   const adminCount = users.filter((u) => u.role === 'admin').length;
   const developerCount = users.filter((u) => u.role === 'developer').length;
 
@@ -235,13 +245,7 @@ export default function UsersPage() {
                             <Badge variant="outline">{u.role}</Badge>
                           </TableCell>
                           <TableCell>
-                            <Badge
-                              variant={
-                                u.status === 'active' ? 'default' : 'secondary'
-                              }
-                            >
-                              {u.status}
-                            </Badge>
+                            <Badge variant="default">有効</Badge>
                           </TableCell>
                           <TableCell className="text-sm text-[#0F172A]">
                             {new Date(u.created_at).toLocaleDateString('ja-JP')}
@@ -250,9 +254,9 @@ export default function UsersPage() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleToggleStatus(u.id, u.status)}
+                              onClick={() => handleToggleStatus(u.id, false)}
                             >
-                              {u.status === 'active' ? '停止' : '有効'}
+                              停止
                             </Button>
                           </TableCell>
                         </TableRow>

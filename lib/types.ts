@@ -9,7 +9,6 @@ export interface Profile {
   email: string;
   full_name: string;
   role: UserRole;
-  status: UserStatus;
   created_at: string;
   updated_at: string;
 }
