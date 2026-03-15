@@ -32,32 +32,36 @@ export default function OrdersPage() {
   return (
     <div>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">受注入力</h1>
-            <p className="text-gray-600 mt-1">新規受注を登録または管理します</p>
-          </div>
-          <Button onClick={() => setShowForm(!showForm)} className="gap-2">
-            <Plus className="h-4 w-4" />
-            新規受注入力
-          </Button>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">受注入力</h1>
         </div>
+        <div className="px-6 py-6">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <p className="text-[#888888] mt-1">新規受注を登録または管理します</p>
+            </div>
+            <Button onClick={() => setShowForm(!showForm)} className="gap-2">
+              <Plus className="h-4 w-4" />
+              新規受注入力
+            </Button>
+          </div>
 
-        {showForm && (
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>新規受注情報</CardTitle>
-              <CardDescription>以下の情報を入力して送信してください</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OrderForm onSuccess={handleOrderCreated} />
-            </CardContent>
-          </Card>
-        )}
+          {showForm && (
+            <Card className="mb-8 bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader>
+                <CardTitle className="text-[#EDEDED]">新規受注情報</CardTitle>
+                <CardDescription className="text-[#888888]">以下の情報を入力して送信してください</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <OrderForm onSuccess={handleOrderCreated} />
+              </CardContent>
+            </Card>
+          )}
 
-        <OrderList key={refreshKey} />
-      </div>
+          <OrderList key={refreshKey} />
+        </div>
+      </main>
     </div>
   );
 }

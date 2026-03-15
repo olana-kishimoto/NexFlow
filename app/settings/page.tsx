@@ -156,54 +156,57 @@ export default function SettingsPage() {
   return (
     <div>
       <Navigation />
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">システム設定</h1>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>API認証情報</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12" />
-                ))}
-              </div>
-            ) : (
-              <>
-                {SETTING_KEYS.map((key) => (
-                  <div key={key}>
-                    <label className="block text-sm font-medium mb-2">
-                      {key}
-                    </label>
-                    <p className="text-xs text-gray-600 mb-2">
-                      {descriptions[key]}
-                    </p>
-                    <Input
-                      type="password"
-                      value={settings[key] || ''}
-                      onChange={(e) => handleChange(key, e.target.value)}
-                      placeholder="••••••••"
-                      className="font-mono text-sm"
-                    />
-                  </div>
-                ))}
-
-                <div className="flex gap-4 pt-6 border-t">
-                  <Button
-                    onClick={handleSave}
-                    disabled={saving}
-                    className="w-full"
-                  >
-                    {saving ? '保存中...' : '設定を保存'}
-                  </Button>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">システム設定</h1>
+        </div>
+        <div className="px-6 py-6">
+          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <CardHeader>
+              <CardTitle className="text-[#EDEDED]">API認証情報</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {loading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                  ))}
                 </div>
-              </>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+              ) : (
+                <>
+                  {SETTING_KEYS.map((key) => (
+                    <div key={key}>
+                      <label className="block text-sm font-medium mb-2 text-[#EDEDED]">
+                        {key}
+                      </label>
+                      <p className="text-xs text-[#888888] mb-2">
+                        {descriptions[key]}
+                      </p>
+                      <Input
+                        type="password"
+                        value={settings[key] || ''}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                        placeholder="••••••••"
+                        className="font-mono text-sm bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED]"
+                      />
+                    </div>
+                  ))}
+
+                  <div className="flex gap-4 pt-6 border-t border-[#2A2A2A]">
+                    <Button
+                      onClick={handleSave}
+                      disabled={saving}
+                      className="w-full"
+                    >
+                      {saving ? '保存中...' : '設定を保存'}
+                    </Button>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </main>
     </div>
   );
 }

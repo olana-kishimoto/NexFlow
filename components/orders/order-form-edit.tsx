@@ -233,9 +233,9 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-6">
       {/* Customer Selection */}
-      <Card className="p-6 border border-slate-200">
+      <Card className="p-6 bg-[#1A1A1A] border border-[#2A2A2A]">
         <div className="space-y-3">
-          <Label className="text-sm font-semibold text-slate-900">
+          <Label className="text-13px font-medium text-[#EDEDED]">
             得意先 <span className="text-red-600">*</span>
           </Label>
           <CustomerSelector
@@ -243,7 +243,7 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
             onSelect={setSelectedCustomer}
           />
           {errors.customer_id && (
-            <p className="text-sm text-red-600">{errors.customer_id}</p>
+            <p className="text-13px text-[#EF4444]">{errors.customer_id}</p>
           )}
         </div>
       </Card>
@@ -251,11 +251,11 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
       {/* Two Column Layout */}
       <div className="grid grid-cols-2 gap-6">
         {/* Left Column - Contract Info */}
-        <Card className="p-6 border border-slate-200 space-y-4">
-          <h3 className="text-xs font-medium text-slate-500 uppercase tracking-wide">契約情報</h3>
+        <Card className="p-6 bg-[#1A1A1A] border border-[#2A2A2A] space-y-4">
+          <h3 className="text-11px font-medium text-[#888888] uppercase tracking-wide">契約情報</h3>
 
           <div className="space-y-2">
-            <Label htmlFor="contract_date" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="contract_date" className="text-13px font-medium text-[#EDEDED]">
               契約日 <span className="text-red-600">*</span>
             </Label>
             <Input
@@ -263,15 +263,15 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               type="date"
               value={formData.contract_date}
               onChange={(e) => handleDateChange('contract_date', e.target.value)}
-              className="border-slate-300"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
             />
             {errors.contract_date && (
-              <p className="text-sm text-red-600">{errors.contract_date}</p>
+              <p className="text-13px text-[#EF4444]">{errors.contract_date}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="start_date" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="start_date" className="text-13px font-medium text-[#EDEDED]">
               利用開始日 <span className="text-red-600">*</span>
             </Label>
             <Input
@@ -279,15 +279,15 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               type="date"
               value={formData.start_date}
               onChange={(e) => handleDateChange('start_date', e.target.value)}
-              className="border-slate-300"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
             />
             {errors.start_date && (
-              <p className="text-sm text-red-600">{errors.start_date}</p>
+              <p className="text-13px text-[#EF4444]">{errors.start_date}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="end_date" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="end_date" className="text-13px font-medium text-[#EDEDED]">
               利用終了日 <span className="text-red-600">*</span>
             </Label>
             <Input
@@ -295,15 +295,15 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               type="date"
               value={formData.end_date}
               onChange={(e) => handleDateChange('end_date', e.target.value)}
-              className="border-slate-300"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
             />
             {errors.end_date && (
-              <p className="text-sm text-red-600">{errors.end_date}</p>
+              <p className="text-13px text-[#EF4444]">{errors.end_date}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="payment_due_date" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="payment_due_date" className="text-13px font-medium text-[#EDEDED]">
               支払期限 <span className="text-red-600">*</span>
             </Label>
             <Input
@@ -311,15 +311,15 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               type="date"
               value={formData.payment_due_date}
               onChange={(e) => handleDateChange('payment_due_date', e.target.value)}
-              className="border-slate-300"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
             />
             {errors.payment_due_date && (
-              <p className="text-sm text-red-600">{errors.payment_due_date}</p>
+              <p className="text-13px text-[#EF4444]">{errors.payment_due_date}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="service_description" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="service_description" className="text-13px font-medium text-[#EDEDED]">
               業務内容 <span className="text-red-600">*</span>
             </Label>
             <Textarea
@@ -327,15 +327,15 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               placeholder="業務内容を入力してください"
               value={formData.service_description}
               onChange={(e) => setFormData({ ...formData, service_description: e.target.value })}
-              className="border-slate-300 min-h-24"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px min-h-24"
             />
             {errors.service_description && (
-              <p className="text-sm text-red-600">{errors.service_description}</p>
+              <p className="text-13px text-[#EF4444]">{errors.service_description}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="special_terms" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="special_terms" className="text-13px font-medium text-[#EDEDED]">
               特約事項
             </Label>
             <Textarea
@@ -343,17 +343,17 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               placeholder="特約事項があれば入力してください"
               value={formData.special_terms}
               onChange={(e) => setFormData({ ...formData, special_terms: e.target.value })}
-              className="border-slate-300 min-h-24"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px min-h-24"
             />
           </div>
         </Card>
 
         {/* Right Column - Pricing Info */}
-        <Card className="p-6 border border-slate-200 space-y-4">
-          <h3 className="text-xs font-medium text-slate-500 uppercase tracking-wide">料金情報</h3>
+        <Card className="p-6 bg-[#1A1A1A] border border-[#2A2A2A] space-y-4">
+          <h3 className="text-11px font-medium text-[#888888] uppercase tracking-wide">料金情報</h3>
 
           <div className="space-y-2">
-            <Label htmlFor="amount" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="amount" className="text-13px font-medium text-[#EDEDED]">
               受注金額（税抜） <span className="text-red-600">*</span>
             </Label>
             <Input
@@ -362,13 +362,13 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
               placeholder="0"
               value={formData.amount}
               onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-              className="border-slate-300"
+              className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
             />
-            {errors.amount && <p className="text-sm text-red-600">{errors.amount}</p>}
+            {errors.amount && <p className="text-13px text-[#EF4444]">{errors.amount}</p>}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tax_rate" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="tax_rate" className="text-13px font-medium text-[#EDEDED]">
               消費税率(%) <span className="text-red-600">*</span>
             </Label>
             <div className="flex items-center gap-2">
@@ -378,23 +378,23 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
                 placeholder="10"
                 value={formData.tax_rate}
                 onChange={(e) => setFormData({ ...formData, tax_rate: e.target.value })}
-                className="border-slate-300"
+                className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
               />
-              <span className="text-sm text-slate-500">%</span>
+              <span className="text-13px text-[#888888]">%</span>
             </div>
           </div>
 
-          <div className="bg-slate-50 p-4 rounded-md border border-slate-200">
+          <div className="bg-[#141414] p-4 rounded-md border border-[#2A2A2A]">
             <div className="flex justify-between items-center mb-3">
-              <span className="text-sm text-slate-600">税込金額</span>
-              <span className="text-sm font-mono text-slate-900">
+              <span className="text-13px text-[#888888]">税込金額</span>
+              <span className="text-13px font-mono text-[#EDEDED]">
                 ¥{getTaxedAmount().toLocaleString('ja-JP')}
               </span>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="commission_rate" className="text-sm font-medium text-slate-700">
+            <Label htmlFor="commission_rate" className="text-13px font-medium text-[#EDEDED]">
               代理店手数料率(%)
             </Label>
             <div className="flex items-center gap-2">
@@ -404,16 +404,16 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
                 placeholder="0"
                 value={formData.commission_rate}
                 onChange={(e) => setFormData({ ...formData, commission_rate: e.target.value })}
-                className="border-slate-300"
+                className="bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555] text-13px"
               />
-              <span className="text-sm text-slate-500">%</span>
+              <span className="text-13px text-[#888888]">%</span>
             </div>
           </div>
 
-          <div className="bg-slate-50 p-4 rounded-md border border-slate-200">
+          <div className="bg-[#141414] p-4 rounded-md border border-[#2A2A2A]">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-slate-600">粗利</span>
-              <span className="text-sm font-mono text-slate-900">
+              <span className="text-13px text-[#888888]">粗利</span>
+              <span className="text-13px font-mono text-[#EDEDED]">
                 ¥{calculateGrossProfit().toLocaleString('ja-JP')}
               </span>
             </div>

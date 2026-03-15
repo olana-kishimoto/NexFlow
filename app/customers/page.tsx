@@ -164,122 +164,126 @@ export default function CustomersPage() {
   return (
     <div>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">得意先管理</h1>
-          <Button
-            onClick={() => {
-              setSelectedCustomer(null);
-              setFormOpen(true);
-            }}
-          >
-            新規得意先を登録
-          </Button>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">得意先管理</h1>
         </div>
+        <div className="px-6 py-6">
+          <div className="flex justify-between items-center mb-8">
+            <Button
+              onClick={() => {
+                setSelectedCustomer(null);
+                setFormOpen(true);
+              }}
+            >
+              新規得意先を登録
+            </Button>
+          </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>得意先一覧</CardTitle>
-              <Input
-                type="text"
-                placeholder="得意先名またはコードで検索..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-64"
-              />
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12" />
-                ))}
+          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-[#EDEDED]">得意先一覧</CardTitle>
+                <Input
+                  type="text"
+                  placeholder="得意先名またはコードで検索..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-64 bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED] placeholder-[#666666]"
+                />
               </div>
-            ) : filteredCustomers.length === 0 ? (
-              <p className="text-center text-gray-600 py-8">
-                得意先が見つかりません
-              </p>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>得意先コード</TableHead>
-                      <TableHead>得意先名</TableHead>
-                      <TableHead>代表者</TableHead>
-                      <TableHead>メール</TableHead>
-                      <TableHead>代理店</TableHead>
-                      <TableHead className="text-center">契約件数</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredCustomers.map((customer) => (
-                      <TableRow key={customer.id}>
-                        <TableCell className="font-mono text-sm">
-                          {customer.customer_code || '-'}
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          {customer.customer_name}
-                        </TableCell>
-                        <TableCell className="text-sm text-gray-600">
-                          {customer.representative_name || '-'}
-                          {customer.representative_title &&
-                            ` (${customer.representative_title})`}
-                        </TableCell>
-                        <TableCell className="text-sm text-blue-600">
-                          {customer.contact_email || '-'}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {customer.agency_name || '-'}
-                        </TableCell>
-                        <TableCell className="text-center font-semibold">
-                          {customer.order_count}件
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleEdit(customer)}
-                              className="gap-2"
-                            >
-                              <Edit className="h-4 w-4" />
-                              編集
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleDelete(customer.id)}
-                              disabled={
-                                (customer.order_count ?? 0) > 0 ||
-                                deleting === customer.id
-                              }
-                              className="gap-2 text-red-600 hover:text-red-700"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                              削除
-                            </Button>
-                          </div>
-                        </TableCell>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                  ))}
+                </div>
+              ) : filteredCustomers.length === 0 ? (
+                <p className="text-center text-[#888888] py-8">
+                  得意先が見つかりません
+                </p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-[#2A2A2A]">
+                        <TableHead className="text-[#EDEDED]">得意先コード</TableHead>
+                        <TableHead className="text-[#EDEDED]">得意先名</TableHead>
+                        <TableHead className="text-[#EDEDED]">代表者</TableHead>
+                        <TableHead className="text-[#EDEDED]">メール</TableHead>
+                        <TableHead className="text-[#EDEDED]">代理店</TableHead>
+                        <TableHead className="text-center text-[#EDEDED]">契約件数</TableHead>
+                        <TableHead className="text-[#EDEDED]">操作</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredCustomers.map((customer) => (
+                        <TableRow key={customer.id} className="border-[#2A2A2A]">
+                          <TableCell className="font-mono text-sm text-[#EDEDED]">
+                            {customer.customer_code || '-'}
+                          </TableCell>
+                          <TableCell className="font-medium text-[#EDEDED]">
+                            {customer.customer_name}
+                          </TableCell>
+                          <TableCell className="text-sm text-[#888888]">
+                            {customer.representative_name || '-'}
+                            {customer.representative_title &&
+                              ` (${customer.representative_title})`}
+                          </TableCell>
+                          <TableCell className="text-sm text-blue-600">
+                            {customer.contact_email || '-'}
+                          </TableCell>
+                          <TableCell className="text-sm text-[#EDEDED]">
+                            {customer.agency_name || '-'}
+                          </TableCell>
+                          <TableCell className="text-center font-semibold text-[#EDEDED]">
+                            {customer.order_count}件
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleEdit(customer)}
+                                className="gap-2"
+                              >
+                                <Edit className="h-4 w-4" />
+                                編集
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleDelete(customer.id)}
+                                disabled={
+                                  (customer.order_count ?? 0) > 0 ||
+                                  deleting === customer.id
+                                }
+                                className="gap-2 text-red-600 hover:text-red-700"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                                削除
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-        <CustomerForm
-          open={formOpen}
-          onOpenChange={setFormOpen}
-          onSuccess={handleFormSuccess}
-          initialCustomer={selectedCustomer || undefined}
-        />
-      </div>
+          <CustomerForm
+            open={formOpen}
+            onOpenChange={setFormOpen}
+            onSuccess={handleFormSuccess}
+            initialCustomer={selectedCustomer || undefined}
+          />
+        </div>
+      </main>
     </div>
   );
 }

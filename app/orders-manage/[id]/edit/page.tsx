@@ -27,10 +27,15 @@ export default function EditOrderPage({ params }: { params: { id: string } }) {
   return (
     <div>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-xl font-semibold text-slate-900 mb-8">受注編集</h1>
-        <OrderFormEdit orderId={params.id} />
-      </div>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">受注編集</h1>
+        </div>
+
+        <div className="px-6 py-6">
+          <OrderFormEdit orderId={params.id} />
+        </div>
+      </main>
     </div>
   );
 }

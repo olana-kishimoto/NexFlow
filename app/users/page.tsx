@@ -115,129 +115,133 @@ export default function UsersPage() {
   return (
     <div>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">ユーザー管理</h1>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            新規ユーザー
-          </Button>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">ユーザー管理</h1>
         </div>
+        <div className="px-6 py-6">
+          <div className="flex justify-between items-center mb-8">
+            <Button className="gap-2">
+              <Plus className="h-4 w-4" />
+              新規ユーザー
+            </Button>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                アクティブユーザー
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{activeCount}</div>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  アクティブユーザー
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-[#EDEDED]">{activeCount}</div>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                管理者
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{adminCount}</div>
-            </CardContent>
-          </Card>
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  管理者
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-[#EDEDED]">{adminCount}</div>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                デベロッパー
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{developerCount}</div>
-            </CardContent>
-          </Card>
-        </div>
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  デベロッパー
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-[#EDEDED]">{developerCount}</div>
+              </CardContent>
+            </Card>
+          </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>ユーザー一覧</CardTitle>
-              <Input
-                type="text"
-                placeholder="名前またはメール検索..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-64"
-              />
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12" />
-                ))}
+          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-[#EDEDED]">ユーザー一覧</CardTitle>
+                <Input
+                  type="text"
+                  placeholder="名前またはメール検索..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-64 bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED] placeholder-[#666666]"
+                />
               </div>
-            ) : filteredUsers.length === 0 ? (
-              <p className="text-center text-gray-600 py-8">
-                ユーザーが見つかりません
-              </p>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>名前</TableHead>
-                      <TableHead>メール</TableHead>
-                      <TableHead>権限</TableHead>
-                      <TableHead>ステータス</TableHead>
-                      <TableHead>作成日</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredUsers.map((u) => (
-                      <TableRow key={u.id}>
-                        <TableCell className="font-medium">
-                          {u.full_name}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {u.email}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline">{u.role}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              u.status === 'active' ? 'default' : 'secondary'
-                            }
-                          >
-                            {u.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {new Date(u.created_at).toLocaleDateString('ja-JP')}
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleToggleStatus(u.id, u.status)}
-                          >
-                            {u.status === 'active' ? '停止' : '有効'}
-                          </Button>
-                        </TableCell>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                  ))}
+                </div>
+              ) : filteredUsers.length === 0 ? (
+                <p className="text-center text-[#888888] py-8">
+                  ユーザーが見つかりません
+                </p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-[#2A2A2A]">
+                        <TableHead className="text-[#EDEDED]">名前</TableHead>
+                        <TableHead className="text-[#EDEDED]">メール</TableHead>
+                        <TableHead className="text-[#EDEDED]">権限</TableHead>
+                        <TableHead className="text-[#EDEDED]">ステータス</TableHead>
+                        <TableHead className="text-[#EDEDED]">作成日</TableHead>
+                        <TableHead className="text-[#EDEDED]">操作</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredUsers.map((u) => (
+                        <TableRow key={u.id} className="border-[#2A2A2A]">
+                          <TableCell className="font-medium text-[#EDEDED]">
+                            {u.full_name}
+                          </TableCell>
+                          <TableCell className="text-sm text-[#EDEDED]">
+                            {u.email}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{u.role}</Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                u.status === 'active' ? 'default' : 'secondary'
+                              }
+                            >
+                              {u.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-sm text-[#EDEDED]">
+                            {new Date(u.created_at).toLocaleDateString('ja-JP')}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleToggleStatus(u.id, u.status)}
+                            >
+                              {u.status === 'active' ? '停止' : '有効'}
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </main>
     </div>
   );
 }

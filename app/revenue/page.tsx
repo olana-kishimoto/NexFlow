@@ -143,142 +143,145 @@ export default function RevenuePage() {
   return (
     <div>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">売上管理</h1>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">売上管理</h1>
+        </div>
+        <div className="px-6 py-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  月額売上
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-[#EDEDED]">
+                  ¥{totalRevenue.toLocaleString('ja-JP')}
+                </div>
+              </CardContent>
+            </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                月額売上
-              </CardTitle>
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  月次粗利
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-green-600">
+                  ¥{totalProfit.toLocaleString('ja-JP')}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  請求待ち件数
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-orange-600">
+                  {pendingCount}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#888888]">
+                  対象月
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Input
+                  type="month"
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  className="text-sm bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED]"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <CardHeader>
+              <CardTitle className="text-[#EDEDED]">月次売上一覧</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                ¥{totalRevenue.toLocaleString('ja-JP')}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                月次粗利
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600">
-                ¥{totalProfit.toLocaleString('ja-JP')}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                請求待ち件数
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-600">
-                {pendingCount}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                対象月
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Input
-                type="month"
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(e.target.value)}
-                className="text-sm"
-              />
+              {loading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                  ))}
+                </div>
+              ) : revenues.length === 0 ? (
+                <p className="text-center text-[#888888] py-8">
+                  対象月の売上がありません
+                </p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-[#2A2A2A]">
+                        <TableHead className="text-[#EDEDED]">顧客名</TableHead>
+                        <TableHead className="text-[#EDEDED]">業務内容</TableHead>
+                        <TableHead className="text-[#EDEDED]">代理店</TableHead>
+                        <TableHead className="text-right text-[#EDEDED]">月額売上</TableHead>
+                        <TableHead className="text-right text-[#EDEDED]">粗利</TableHead>
+                        <TableHead className="text-[#EDEDED]">CloudSign状況</TableHead>
+                        <TableHead className="text-[#EDEDED]">請求状況</TableHead>
+                        <TableHead className="text-[#EDEDED]">操作</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {revenues.map((revenue) => (
+                        <TableRow key={revenue.id} className="border-[#2A2A2A]">
+                          <TableCell className="font-medium text-[#EDEDED]">
+                            {revenue.customer_name}
+                          </TableCell>
+                          <TableCell className="text-sm text-[#EDEDED]">
+                            {revenue.service_description}
+                          </TableCell>
+                          <TableCell className="text-sm text-[#EDEDED]">
+                            {revenue.agency_name || '-'}
+                          </TableCell>
+                          <TableCell className="text-right font-semibold text-[#EDEDED]">
+                            ¥{revenue.revenue_amount.toLocaleString('ja-JP')}
+                          </TableCell>
+                          <TableCell className="text-right font-semibold text-green-600">
+                            ¥{revenue.gross_profit.toLocaleString('ja-JP')}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline">
+                              {revenue.cloudsign_status || 'N/A'}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={badgeVariant(revenue.invoice_status)}>
+                              {revenue.invoice_status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            {revenue.invoice_status === 'pending' ? (
+                              <Button size="sm" variant="outline">
+                                請求作成
+                              </Button>
+                            ) : (
+                              <span className="text-sm text-[#888888]">-</span>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>月次売上一覧</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12" />
-                ))}
-              </div>
-            ) : revenues.length === 0 ? (
-              <p className="text-center text-gray-600 py-8">
-                対象月の売上がありません
-              </p>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>顧客名</TableHead>
-                      <TableHead>業務内容</TableHead>
-                      <TableHead>代理店</TableHead>
-                      <TableHead className="text-right">月額売上</TableHead>
-                      <TableHead className="text-right">粗利</TableHead>
-                      <TableHead>CloudSign状況</TableHead>
-                      <TableHead>請求状況</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {revenues.map((revenue) => (
-                      <TableRow key={revenue.id}>
-                        <TableCell className="font-medium">
-                          {revenue.customer_name}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {revenue.service_description}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {revenue.agency_name || '-'}
-                        </TableCell>
-                        <TableCell className="text-right font-semibold">
-                          ¥{revenue.revenue_amount.toLocaleString('ja-JP')}
-                        </TableCell>
-                        <TableCell className="text-right font-semibold text-green-600">
-                          ¥{revenue.gross_profit.toLocaleString('ja-JP')}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline">
-                            {revenue.cloudsign_status || 'N/A'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={badgeVariant(revenue.invoice_status)}>
-                            {revenue.invoice_status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          {revenue.invoice_status === 'pending' ? (
-                            <Button size="sm" variant="outline">
-                              請求作成
-                            </Button>
-                          ) : (
-                            <span className="text-sm text-gray-600">-</span>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+      </main>
     </div>
   );
 }

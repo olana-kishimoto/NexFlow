@@ -128,90 +128,93 @@ export default function ContractsPage() {
   return (
     <div>
       <Navigation />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">契約管理</h1>
+      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+          <h1 className="text-base font-semibold text-[#EDEDED]">契約管理</h1>
+        </div>
+        <div className="px-6 py-6">
+          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <CardHeader>
+              <CardTitle className="text-[#EDEDED]">契約一覧</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                  ))}
+                </div>
+              ) : contracts.length === 0 ? (
+                <p className="text-center text-[#888888] py-8">
+                  CloudSign連携済みの契約がありません
+                </p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-[#2A2A2A]">
+                        <TableHead className="text-[#EDEDED]">顧客名</TableHead>
+                        <TableHead className="text-[#EDEDED]">業務内容</TableHead>
+                        <TableHead className="text-[#EDEDED]">契約期間</TableHead>
+                        <TableHead className="text-right text-[#EDEDED]">月額金額</TableHead>
+                        <TableHead className="text-right text-[#EDEDED]">粗利</TableHead>
+                        <TableHead className="text-[#EDEDED]">ステータス</TableHead>
+                        <TableHead className="text-[#EDEDED]">操作</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {contracts.map((contract) => {
+                        const grossProfit =
+                          contract.amount *
+                          (1 - (contract.commission_rate || 0) / 100);
 
-        <Card>
-          <CardHeader>
-            <CardTitle>契約一覧</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12" />
-                ))}
-              </div>
-            ) : contracts.length === 0 ? (
-              <p className="text-center text-gray-600 py-8">
-                CloudSign連携済みの契約がありません
-              </p>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>顧客名</TableHead>
-                      <TableHead>業務内容</TableHead>
-                      <TableHead>契約期間</TableHead>
-                      <TableHead className="text-right">月額金額</TableHead>
-                      <TableHead className="text-right">粗利</TableHead>
-                      <TableHead>ステータス</TableHead>
-                      <TableHead>操作</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {contracts.map((contract) => {
-                      const grossProfit =
-                        contract.amount *
-                        (1 - (contract.commission_rate || 0) / 100);
-
-                      return (
-                        <TableRow key={contract.id}>
-                          <TableCell className="font-medium">
-                            {contract.customer_name}
-                          </TableCell>
-                          <TableCell className="text-sm">
-                            {contract.service_description}
-                          </TableCell>
-                          <TableCell className="text-sm">
-                            {contract.contract_start} ～ {contract.contract_end}
-                          </TableCell>
-                          <TableCell className="text-right font-semibold">
-                            ¥
-                            {contract.amount.toLocaleString('ja-JP')}
-                          </TableCell>
-                          <TableCell className="text-right font-semibold text-green-600">
-                            ¥{grossProfit.toLocaleString('ja-JP')}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={statusBadgeVariant(
-                                contract.cloudsign_status
+                        return (
+                          <TableRow key={contract.id} className="border-[#2A2A2A]">
+                            <TableCell className="font-medium text-[#EDEDED]">
+                              {contract.customer_name}
+                            </TableCell>
+                            <TableCell className="text-sm text-[#EDEDED]">
+                              {contract.service_description}
+                            </TableCell>
+                            <TableCell className="text-sm text-[#EDEDED]">
+                              {contract.contract_start} ～ {contract.contract_end}
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-[#EDEDED]">
+                              ¥
+                              {contract.amount.toLocaleString('ja-JP')}
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-green-600">
+                              ¥{grossProfit.toLocaleString('ja-JP')}
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant={statusBadgeVariant(
+                                  contract.cloudsign_status
+                                )}
+                              >
+                                {contract.cloudsign_status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              {contract.cloudsign_status === 'sent' ? (
+                                <Button size="sm" variant="outline">
+                                  確認
+                                </Button>
+                              ) : (
+                                <span className="text-sm text-[#888888]">-</span>
                               )}
-                            >
-                              {contract.cloudsign_status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {contract.cloudsign_status === 'sent' ? (
-                              <Button size="sm" variant="outline">
-                                確認
-                              </Button>
-                            ) : (
-                              <span className="text-sm text-gray-600">-</span>
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </main>
     </div>
   );
 }
