@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Customer } from '@/lib/types';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -63,6 +63,7 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
       if (!user) throw new Error('未認証');
       if (!selectedCustomer) throw new Error('得意先を選択してください');
 
+      const supabase = createClient();
       const { data, error } = await supabase
         .from('orders')
         .insert([

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Customer } from '@/lib/types';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -55,6 +55,7 @@ export default function CustomerForm({
         throw new Error('得意先名は必須です');
       }
 
+      const supabase = createClient();
       if (initialCustomer) {
         const { data, error } = await supabase
           .from('customers')

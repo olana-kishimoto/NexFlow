@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Customer } from '@/lib/types';
 import { Navigation } from '@/components/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -57,6 +57,7 @@ export default function CustomersPage() {
       if (!user) return;
 
       try {
+        const supabase = createClient();
         let query = supabase.from('customers').select(`
           *,
           orders(id)
@@ -123,6 +124,7 @@ export default function CustomersPage() {
 
     setDeleting(customerId);
     try {
+      const supabase = createClient();
       const { error } = await supabase
         .from('customers')
         .delete()

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Customer } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +32,7 @@ export default function CustomerSelector({
       if (!user) return;
 
       try {
+        const supabase = createClient();
         let query = supabase.from('customers').select('*');
 
         if (profile?.role === 'user') {

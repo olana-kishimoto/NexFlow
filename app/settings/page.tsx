@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Navigation } from '@/components/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -49,6 +49,7 @@ export default function SettingsPage() {
       if (!user || profile?.role !== 'developer') return;
 
       try {
+        const supabase = createClient();
         const { data, error } = await supabase
           .from('system_settings')
           .select('*')
@@ -84,6 +85,7 @@ export default function SettingsPage() {
     setSaving(true);
 
     try {
+      const supabase = createClient();
       for (const key of SETTING_KEYS) {
         const value = settings[key];
         const existing = await supabase

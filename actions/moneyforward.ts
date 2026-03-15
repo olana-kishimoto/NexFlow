@@ -1,8 +1,6 @@
 'use server';
 
-import { getSupabaseServerClient } from '@/lib/supabase/server';
-
-const supabaseServer = getSupabaseServerClient();
+import { createClient } from '@/lib/supabase/server';
 
 interface MFBillingItem {
   name: string;
@@ -12,6 +10,7 @@ interface MFBillingItem {
 }
 
 async function getMFSettings() {
+  const supabaseServer = await createClient();
   const { data: settings } = await supabaseServer
     .from('system_settings')
     .select('key, value')
@@ -150,6 +149,7 @@ export async function createMFInvoice(
   refreshToken: string
 ): Promise<{ success: boolean; error?: string; billingId?: string }> {
   try {
+    const supabaseServer = await createClient();
     const { data: { user } } = await supabaseServer.auth.getUser();
 
     if (!user) {
@@ -257,6 +257,7 @@ export async function generateCSVExport(
   }>
 ): Promise<{ success: boolean; data?: string; error?: string }> {
   try {
+    const supabaseServer = await createClient();
     const { data: { user } } = await supabaseServer.auth.getUser();
 
     if (!user) {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Order } from '@/lib/types';
 import { Navigation } from '@/components/navigation';
 import { Button } from '@/components/ui/button';
@@ -31,6 +31,7 @@ export default function OrderDetailPage() {
       if (!user || !params.id) return;
 
       try {
+        const supabase = createClient();
         let query = supabase
           .from('orders')
           .select(`

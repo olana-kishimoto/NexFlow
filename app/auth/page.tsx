@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,6 +20,7 @@ export default function AuthPage() {
     setLoading(true);
 
     try {
+      const supabase = createClient();
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -52,9 +53,6 @@ export default function AuthPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">NexFlow Hub</CardTitle>
-          <CardDescription className="text-center">
-            統合業務基盤システム
-          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <form onSubmit={handleLogin} className="space-y-4">
@@ -89,11 +87,6 @@ export default function AuthPage() {
             </Button>
           </form>
 
-          <div className="border-t border-slate-200 pt-6">
-            <p className="text-sm text-slate-600 text-center leading-relaxed">
-              アカウントが必要な方は管理者にお問い合わせください
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
