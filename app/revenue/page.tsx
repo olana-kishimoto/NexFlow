@@ -143,28 +143,28 @@ export default function RevenuePage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
-          <h1 className="text-base font-semibold text-[#EDEDED]">売上管理</h1>
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
+          <h1 className="text-base font-semibold text-[#0F172A]">売上管理</h1>
         </div>
         <div className="px-6 py-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   月額売上
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-[#EDEDED]">
+                <div className="text-2xl font-bold text-[#0F172A]">
                   ¥{totalRevenue.toLocaleString('ja-JP')}
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   月次粗利
                 </CardTitle>
               </CardHeader>
@@ -175,9 +175,9 @@ export default function RevenuePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   請求待ち件数
                 </CardTitle>
               </CardHeader>
@@ -188,9 +188,9 @@ export default function RevenuePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   対象月
                 </CardTitle>
               </CardHeader>
@@ -199,55 +199,55 @@ export default function RevenuePage() {
                   type="month"
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
-                  className="text-sm bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED]"
+                  className="text-sm bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A]"
                 />
               </CardContent>
             </Card>
           </div>
 
-          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+          <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
             <CardHeader>
-              <CardTitle className="text-[#EDEDED]">月次売上一覧</CardTitle>
+              <CardTitle className="text-[#0F172A]">月次売上一覧</CardTitle>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                    <Skeleton key={i} className="h-12 bg-[#F8FAFC]" />
                   ))}
                 </div>
               ) : revenues.length === 0 ? (
-                <p className="text-center text-[#888888] py-8">
+                <p className="text-center text-[#64748B] py-8">
                   対象月の売上がありません
                 </p>
               ) : (
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
-                      <TableRow className="border-[#2A2A2A]">
-                        <TableHead className="text-[#EDEDED]">顧客名</TableHead>
-                        <TableHead className="text-[#EDEDED]">業務内容</TableHead>
-                        <TableHead className="text-[#EDEDED]">代理店</TableHead>
-                        <TableHead className="text-right text-[#EDEDED]">月額売上</TableHead>
-                        <TableHead className="text-right text-[#EDEDED]">粗利</TableHead>
-                        <TableHead className="text-[#EDEDED]">CloudSign状況</TableHead>
-                        <TableHead className="text-[#EDEDED]">請求状況</TableHead>
-                        <TableHead className="text-[#EDEDED]">操作</TableHead>
+                      <TableRow className="border-[#E2E8F0]">
+                        <TableHead className="text-[#0F172A]">顧客名</TableHead>
+                        <TableHead className="text-[#0F172A]">業務内容</TableHead>
+                        <TableHead className="text-[#0F172A]">代理店</TableHead>
+                        <TableHead className="text-right text-[#0F172A]">月額売上</TableHead>
+                        <TableHead className="text-right text-[#0F172A]">粗利</TableHead>
+                        <TableHead className="text-[#0F172A]">CloudSign状況</TableHead>
+                        <TableHead className="text-[#0F172A]">請求状況</TableHead>
+                        <TableHead className="text-[#0F172A]">操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {revenues.map((revenue) => (
-                        <TableRow key={revenue.id} className="border-[#2A2A2A]">
-                          <TableCell className="font-medium text-[#EDEDED]">
+                        <TableRow key={revenue.id} className="border-[#E2E8F0]">
+                          <TableCell className="font-medium text-[#0F172A]">
                             {revenue.customer_name}
                           </TableCell>
-                          <TableCell className="text-sm text-[#EDEDED]">
+                          <TableCell className="text-sm text-[#0F172A]">
                             {revenue.service_description}
                           </TableCell>
-                          <TableCell className="text-sm text-[#EDEDED]">
+                          <TableCell className="text-sm text-[#0F172A]">
                             {revenue.agency_name || '-'}
                           </TableCell>
-                          <TableCell className="text-right font-semibold text-[#EDEDED]">
+                          <TableCell className="text-right font-semibold text-[#0F172A]">
                             ¥{revenue.revenue_amount.toLocaleString('ja-JP')}
                           </TableCell>
                           <TableCell className="text-right font-semibold text-green-600">
@@ -269,7 +269,7 @@ export default function RevenuePage() {
                                 請求作成
                               </Button>
                             ) : (
-                              <span className="text-sm text-[#888888]">-</span>
+                              <span className="text-sm text-[#64748B]">-</span>
                             )}
                           </TableCell>
                         </TableRow>

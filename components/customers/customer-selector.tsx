@@ -23,7 +23,7 @@ export default function CustomerSelector({
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<'select' | 'create'>('select');
   const [formOpen, setFormOpen] = useState(false);
 
@@ -43,7 +43,6 @@ export default function CustomerSelector({
 
         if (error) throw error;
         setCustomers(data || []);
-        setFilteredCustomers(data || []);
       } finally {
         setLoading(false);
       }
@@ -53,6 +52,11 @@ export default function CustomerSelector({
   }, [user, profile]);
 
   useEffect(() => {
+    if (searchTerm.length < 1) {
+      setFilteredCustomers([]);
+      return;
+    }
+
     const filtered = customers.filter(
       (c) =>
         c.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -91,55 +95,55 @@ export default function CustomerSelector({
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          {loading ? (
-            <div className="text-center text-gray-600 py-8">読み込み中...</div>
-          ) : filteredCustomers.length === 0 ? (
-            <div className="text-center text-gray-600 py-8">
-              得意先が見つかりません
+          {searchTerm.length >= 1 && filteredCustomers.length === 0 && (
+            <div className="text-center text-[#94A3B8] py-8 text-13px">
+              「{searchTerm}」に一致する得意先が見つかりません
             </div>
-          ) : (
+          )}
+
+          {searchTerm.length >= 1 && filteredCustomers.length > 0 && (
             <div className="space-y-2 max-h-96 overflow-y-auto">
               {filteredCustomers.map((customer) => (
                 <Card
                   key={customer.id}
                   className={`cursor-pointer transition-colors ${
                     selectedCustomerId === customer.id
-                      ? 'bg-blue-50 border-blue-300'
-                      : 'hover:bg-gray-50'
+                      ? 'bg-[#EEF2FF] border-[#818CF8]'
+                      : 'hover:bg-[#F8FAFC]'
                   }`}
                   onClick={() => handleCustomerSelect(customer)}
                 >
                   <CardContent className="pt-4">
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="font-semibold">
+                        <p className="font-semibold text-[#0F172A]">
                           {customer.customer_code && (
-                            <span className="text-gray-600 mr-2">
+                            <span className="text-[#64748B] mr-2">
                               [{customer.customer_code}]
                             </span>
                           )}
                           {customer.customer_name}
                         </p>
                         {customer.representative_name && (
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-[#64748B]">
                             {customer.representative_name}
                             {customer.representative_title &&
                               ` (${customer.representative_title})`}
                           </p>
                         )}
                         {customer.contact_email && (
-                          <p className="text-sm text-blue-600">
+                          <p className="text-sm text-[#6366F1]">
                             {customer.contact_email}
                           </p>
                         )}
                         {customer.customer_address && (
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-[#94A3B8] mt-1">
                             {customer.customer_address}
                           </p>
                         )}
                       </div>
                       {selectedCustomerId === customer.id && (
-                        <div className="text-green-600 font-semibold">選択中</div>
+                        <div className="text-[#10B981] font-semibold text-13px">選択中</div>
                       )}
                     </div>
                   </CardContent>
@@ -149,26 +153,26 @@ export default function CustomerSelector({
           )}
 
           {selectedCustomer && (
-            <Card className="bg-blue-50 border-blue-200">
+            <Card className="bg-[#EEF2FF] border-[#E0E7FF]">
               <CardContent className="pt-4">
-                <p className="text-sm font-semibold text-gray-700 mb-2">
+                <p className="text-13px font-semibold text-[#64748B] mb-2">
                   選択中の得意先
                 </p>
-                <p className="font-semibold text-lg">
+                <p className="font-semibold text-base text-[#0F172A]">
                   {selectedCustomer.customer_code && (
-                    <span className="text-gray-600 mr-2">
+                    <span className="text-[#64748B] mr-2">
                       [{selectedCustomer.customer_code}]
                     </span>
                   )}
                   {selectedCustomer.customer_name}
                 </p>
                 {selectedCustomer.customer_postal_code && (
-                  <p className="text-sm text-gray-600">
+                  <p className="text-13px text-[#64748B]">
                     {selectedCustomer.customer_postal_code}
                   </p>
                 )}
                 {selectedCustomer.customer_address && (
-                  <p className="text-sm text-gray-600">
+                  <p className="text-13px text-[#64748B]">
                     {selectedCustomer.customer_address}
                   </p>
                 )}

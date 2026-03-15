@@ -42,10 +42,10 @@ export default function OrdersManagePage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
           <div className="flex items-center justify-between">
-            <h1 className="text-base font-semibold text-[#EDEDED]">受注管理</h1>
+            <h1 className="text-base font-semibold text-[#0F172A]">受注管理</h1>
             <Link href="/orders-manage/new">
               <Button>新規受注</Button>
             </Link>

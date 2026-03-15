@@ -42,10 +42,10 @@ interface Order {
 }
 
 const statusColors: Record<string, { bg: string; text: string; label: string }> = {
-  draft: { bg: 'bg-[#2A2A2A]', text: 'text-[#888888]', label: '下書き' },
-  active: { bg: 'bg-[#064E3B]', text: 'text-[#10B981]', label: '契約中' },
-  void: { bg: 'bg-[#450A0A]', text: 'text-[#EF4444]', label: '無効' },
-  cancelled: { bg: 'bg-[#2A2A2A]', text: 'text-[#555555]', label: '解約済' },
+  draft: { bg: 'bg-[#F1F5F9]', text: 'text-[#64748B]', label: '下書き' },
+  active: { bg: 'bg-[#DCFCE7]', text: 'text-[#16A34A]', label: '契約中' },
+  void: { bg: 'bg-[#FEE2E2]', text: 'text-[#EF4444]', label: '無効' },
+  cancelled: { bg: 'bg-[#F1F5F9]', text: 'text-[#94A3B8]', label: '解約済' },
 };
 
 export function OrderListNew() {
@@ -130,34 +130,34 @@ export function OrderListNew() {
     <div className="space-y-6">
       {/* KPI Summary */}
       <div className="grid grid-cols-4 gap-4">
-        <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-          <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">全件数</p>
-          <p className="text-20px font-semibold text-[#EDEDED] mt-1 font-mono">{orders.length}</p>
+        <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+          <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">全件数</p>
+          <p className="text-20px font-semibold text-[#0F172A] mt-1 font-mono">{orders.length}</p>
         </Card>
-        <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-          <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">下書き</p>
-          <p className="text-20px font-semibold text-[#EDEDED] mt-1 font-mono">{draftCount}</p>
+        <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+          <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">下書き</p>
+          <p className="text-20px font-semibold text-[#0F172A] mt-1 font-mono">{draftCount}</p>
         </Card>
-        <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-          <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">契約中</p>
-          <p className="text-20px font-semibold text-[#EDEDED] mt-1 font-mono">{activeCount}</p>
+        <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+          <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">契約中</p>
+          <p className="text-20px font-semibold text-[#0F172A] mt-1 font-mono">{activeCount}</p>
         </Card>
-        <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-          <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">今月受注金額</p>
-          <p className="text-20px font-semibold text-[#EDEDED] mt-1 font-mono">
+        <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+          <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">今月受注金額</p>
+          <p className="text-20px font-semibold text-[#0F172A] mt-1 font-mono">
             {formatCurrency(totalAmount)}
           </p>
         </Card>
       </div>
 
       {/* Filter Bar */}
-      <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
+      <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
         <div className="flex gap-4">
           <Input
             placeholder="得意先名・業務内容を検索..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className="flex-1 bg-[#141414] border border-[#2A2A2A] text-[#EDEDED] placeholder-[#555555]"
+            className="flex-1 bg-[#FFFFFF] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8]"
           />
           <div className="flex gap-2">
             {['draft', 'active', 'void', 'cancelled'].map((status) => (
@@ -179,41 +179,41 @@ export function OrderListNew() {
       </Card>
 
       {/* Orders Table */}
-      <Card className="bg-[#1A1A1A] border border-[#2A2A2A] overflow-hidden">
+      <Card className="bg-[#FFFFFF] border border-[#E2E8F0] overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="bg-[#141414] border-b border-[#2A2A2A]">
-              <TableHead className="text-11px font-medium text-[#888888] uppercase">得意先名</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase">業務内容</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase">契約期間</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase text-right">受注金額</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase text-right">粗利</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase">ステータス</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase">作成日</TableHead>
-              <TableHead className="text-11px font-medium text-[#888888] uppercase text-center">操作</TableHead>
+            <TableRow className="bg-[#F8FAFC] border-b border-[#E2E8F0]">
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase">得意先名</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase">業務内容</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase">契約期間</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase text-right">受注金額</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase text-right">粗利</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase">ステータス</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase">作成日</TableHead>
+              <TableHead className="text-11px font-medium text-[#64748B] uppercase text-center">操作</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredOrders.map((order) => (
               <TableRow
                 key={order.id}
-                className={`h-11 border-b border-[#2A2A2A] hover:bg-[#1F1F1F] transition-colors ${
-                  highlightedOrderId === order.id ? 'bg-[#064E3B]' : ''
+                className={`h-11 border-b border-[#E2E8F0] hover:bg-[#F8FAFC] transition-colors ${
+                  highlightedOrderId === order.id ? 'bg-[#DCFCE7]' : ''
                 }`}
               >
-                <TableCell className="text-13px text-[#EDEDED] font-medium pl-4">
+                <TableCell className="text-13px text-[#0F172A] font-medium pl-4">
                   {order.customers?.customer_name}
                 </TableCell>
-                <TableCell className="text-13px text-[#EDEDED] max-w-xs truncate">
+                <TableCell className="text-13px text-[#0F172A] max-w-xs truncate">
                   {order.service_description}
                 </TableCell>
-                <TableCell className="text-13px text-[#EDEDED]">
+                <TableCell className="text-13px text-[#0F172A]">
                   {formatDateRange(order.start_date, order.end_date)}
                 </TableCell>
-                <TableCell className="text-13px font-mono text-[#EDEDED] text-right pr-4">
+                <TableCell className="text-13px font-mono text-[#0F172A] text-right pr-4">
                   {formatCurrency(order.amount)}
                 </TableCell>
-                <TableCell className="text-13px font-mono text-[#EDEDED] text-right pr-4">
+                <TableCell className="text-13px font-mono text-[#0F172A] text-right pr-4">
                   {formatCurrency(calculateGrossProfit(order.amount, order.commission_rate))}
                 </TableCell>
                 <TableCell>
@@ -223,7 +223,7 @@ export function OrderListNew() {
                     {statusColors[order.status].label}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-13px text-[#EDEDED]">
+                <TableCell className="text-13px text-[#0F172A]">
                   {formatDate(order.created_at)}
                 </TableCell>
                 <TableCell className="text-center">
@@ -309,7 +309,7 @@ export function OrderListNew() {
 
       {filteredOrders.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-[#888888] text-13px">受注がありません</p>
+          <p className="text-[#64748B] text-13px">受注がありません</p>
         </div>
       )}
     </div>

@@ -164,9 +164,9 @@ export default function CustomersPage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
-          <h1 className="text-base font-semibold text-[#EDEDED]">得意先管理</h1>
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
+          <h1 className="text-base font-semibold text-[#0F172A]">得意先管理</h1>
         </div>
         <div className="px-6 py-6">
           <div className="flex justify-between items-center mb-8">
@@ -180,16 +180,16 @@ export default function CustomersPage() {
             </Button>
           </div>
 
-          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+          <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-[#EDEDED]">得意先一覧</CardTitle>
+                <CardTitle className="text-[#0F172A]">得意先一覧</CardTitle>
                 <Input
                   type="text"
                   placeholder="得意先名またはコードで検索..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-64 bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED] placeholder-[#666666]"
+                  className="w-64 bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8]"
                 />
               </div>
             </CardHeader>
@@ -197,37 +197,37 @@ export default function CustomersPage() {
               {loading ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                    <Skeleton key={i} className="h-12 bg-[#F8FAFC]" />
                   ))}
                 </div>
               ) : filteredCustomers.length === 0 ? (
-                <p className="text-center text-[#888888] py-8">
+                <p className="text-center text-[#64748B] py-8">
                   得意先が見つかりません
                 </p>
               ) : (
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
-                      <TableRow className="border-[#2A2A2A]">
-                        <TableHead className="text-[#EDEDED]">得意先コード</TableHead>
-                        <TableHead className="text-[#EDEDED]">得意先名</TableHead>
-                        <TableHead className="text-[#EDEDED]">代表者</TableHead>
-                        <TableHead className="text-[#EDEDED]">メール</TableHead>
-                        <TableHead className="text-[#EDEDED]">代理店</TableHead>
-                        <TableHead className="text-center text-[#EDEDED]">契約件数</TableHead>
-                        <TableHead className="text-[#EDEDED]">操作</TableHead>
+                      <TableRow className="border-[#E2E8F0]">
+                        <TableHead className="text-[#0F172A]">得意先コード</TableHead>
+                        <TableHead className="text-[#0F172A]">得意先名</TableHead>
+                        <TableHead className="text-[#0F172A]">代表者</TableHead>
+                        <TableHead className="text-[#0F172A]">メール</TableHead>
+                        <TableHead className="text-[#0F172A]">代理店</TableHead>
+                        <TableHead className="text-center text-[#0F172A]">契約件数</TableHead>
+                        <TableHead className="text-[#0F172A]">操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredCustomers.map((customer) => (
-                        <TableRow key={customer.id} className="border-[#2A2A2A]">
-                          <TableCell className="font-mono text-sm text-[#EDEDED]">
+                        <TableRow key={customer.id} className="border-[#E2E8F0]">
+                          <TableCell className="font-mono text-sm text-[#0F172A]">
                             {customer.customer_code || '-'}
                           </TableCell>
-                          <TableCell className="font-medium text-[#EDEDED]">
+                          <TableCell className="font-medium text-[#0F172A]">
                             {customer.customer_name}
                           </TableCell>
-                          <TableCell className="text-sm text-[#888888]">
+                          <TableCell className="text-sm text-[#64748B]">
                             {customer.representative_name || '-'}
                             {customer.representative_title &&
                               ` (${customer.representative_title})`}
@@ -235,10 +235,10 @@ export default function CustomersPage() {
                           <TableCell className="text-sm text-blue-600">
                             {customer.contact_email || '-'}
                           </TableCell>
-                          <TableCell className="text-sm text-[#EDEDED]">
+                          <TableCell className="text-sm text-[#0F172A]">
                             {customer.agency_name || '-'}
                           </TableCell>
-                          <TableCell className="text-center font-semibold text-[#EDEDED]">
+                          <TableCell className="text-center font-semibold text-[#0F172A]">
                             {customer.order_count}件
                           </TableCell>
                           <TableCell>

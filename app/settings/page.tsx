@@ -156,30 +156,30 @@ export default function SettingsPage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
-          <h1 className="text-base font-semibold text-[#EDEDED]">システム設定</h1>
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
+          <h1 className="text-base font-semibold text-[#0F172A]">システム設定</h1>
         </div>
         <div className="px-6 py-6">
-          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+          <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
             <CardHeader>
-              <CardTitle className="text-[#EDEDED]">API認証情報</CardTitle>
+              <CardTitle className="text-[#0F172A]">API認証情報</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {loading ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                    <Skeleton key={i} className="h-12 bg-[#F8FAFC]" />
                   ))}
                 </div>
               ) : (
                 <>
                   {SETTING_KEYS.map((key) => (
                     <div key={key}>
-                      <label className="block text-sm font-medium mb-2 text-[#EDEDED]">
+                      <label className="block text-sm font-medium mb-2 text-[#0F172A]">
                         {key}
                       </label>
-                      <p className="text-xs text-[#888888] mb-2">
+                      <p className="text-xs text-[#64748B] mb-2">
                         {descriptions[key]}
                       </p>
                       <Input
@@ -187,12 +187,12 @@ export default function SettingsPage() {
                         value={settings[key] || ''}
                         onChange={(e) => handleChange(key, e.target.value)}
                         placeholder="••••••••"
-                        className="font-mono text-sm bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED]"
+                        className="font-mono text-sm bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A]"
                       />
                     </div>
                   ))}
 
-                  <div className="flex gap-4 pt-6 border-t border-[#2A2A2A]">
+                  <div className="flex gap-4 pt-6 border-t border-[#E2E8F0]">
                     <Button
                       onClick={handleSave}
                       disabled={saving}

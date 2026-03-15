@@ -20,7 +20,6 @@ export function Navigation() {
   if (!user) return null;
 
   const navItems = [
-    { label: '受注入力', href: '/orders', roles: ['user', 'admin', 'developer'] },
     { label: '受注管理', href: '/orders-manage', roles: ['admin', 'developer'] },
     { label: '得意先管理', href: '/customers', roles: ['admin', 'developer'] },
     { label: '売上管理', href: '/revenue', roles: ['admin', 'developer'] },
@@ -37,8 +36,8 @@ export function Navigation() {
   const isActive = (href: string) => pathname?.startsWith(href);
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[220px] bg-[#141414] border-r border-[#2A2A2A] flex flex-col">
-      <div className="h-12 flex items-center px-4 border-b border-[#2A2A2A]">
+    <aside className="fixed left-0 top-0 h-screen w-[220px] bg-[#0F1117] border-r border-[#1C2333] flex flex-col">
+      <div className="h-12 flex items-center px-4 border-b border-[#1C2333]">
         <Link href="/dashboard" className="font-semibold text-sm text-[#EDEDED]">
           NexFlow
         </Link>
@@ -53,8 +52,8 @@ export function Navigation() {
               href={item.href}
               className={`flex items-center h-8 px-3 rounded-md text-13px transition-all ${
                 active
-                  ? 'bg-[#1F1F1F] text-[#EDEDED] border-l-2 border-[#6366F1]'
-                  : 'text-[#888888] hover:bg-[#1F1F1F] hover:text-[#EDEDED]'
+                  ? 'bg-[#1F2937] text-[#EDEDED] border-l-2 border-[#6366F1]'
+                  : 'text-[#888888] hover:bg-[#1F2937] hover:text-[#EDEDED]'
               }`}
             >
               {item.label}
@@ -63,7 +62,7 @@ export function Navigation() {
         })}
       </nav>
 
-      <div className="border-t border-[#2A2A2A] p-3 space-y-2">
+      <div className="border-t border-[#1C2333] p-3 space-y-2">
         <div className="text-11px text-[#888888] uppercase tracking-wide px-3">
           {profile?.full_name}
         </div>

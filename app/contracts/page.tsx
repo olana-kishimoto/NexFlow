@@ -128,38 +128,38 @@ export default function ContractsPage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
-          <h1 className="text-base font-semibold text-[#EDEDED]">契約管理</h1>
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
+          <h1 className="text-base font-semibold text-[#0F172A]">契約管理</h1>
         </div>
         <div className="px-6 py-6">
-          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+          <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
             <CardHeader>
-              <CardTitle className="text-[#EDEDED]">契約一覧</CardTitle>
+              <CardTitle className="text-[#0F172A]">契約一覧</CardTitle>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                    <Skeleton key={i} className="h-12 bg-[#F8FAFC]" />
                   ))}
                 </div>
               ) : contracts.length === 0 ? (
-                <p className="text-center text-[#888888] py-8">
+                <p className="text-center text-[#64748B] py-8">
                   CloudSign連携済みの契約がありません
                 </p>
               ) : (
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
-                      <TableRow className="border-[#2A2A2A]">
-                        <TableHead className="text-[#EDEDED]">顧客名</TableHead>
-                        <TableHead className="text-[#EDEDED]">業務内容</TableHead>
-                        <TableHead className="text-[#EDEDED]">契約期間</TableHead>
-                        <TableHead className="text-right text-[#EDEDED]">月額金額</TableHead>
-                        <TableHead className="text-right text-[#EDEDED]">粗利</TableHead>
-                        <TableHead className="text-[#EDEDED]">ステータス</TableHead>
-                        <TableHead className="text-[#EDEDED]">操作</TableHead>
+                      <TableRow className="border-[#E2E8F0]">
+                        <TableHead className="text-[#0F172A]">顧客名</TableHead>
+                        <TableHead className="text-[#0F172A]">業務内容</TableHead>
+                        <TableHead className="text-[#0F172A]">契約期間</TableHead>
+                        <TableHead className="text-right text-[#0F172A]">月額金額</TableHead>
+                        <TableHead className="text-right text-[#0F172A]">粗利</TableHead>
+                        <TableHead className="text-[#0F172A]">ステータス</TableHead>
+                        <TableHead className="text-[#0F172A]">操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -169,17 +169,17 @@ export default function ContractsPage() {
                           (1 - (contract.commission_rate || 0) / 100);
 
                         return (
-                          <TableRow key={contract.id} className="border-[#2A2A2A]">
-                            <TableCell className="font-medium text-[#EDEDED]">
+                          <TableRow key={contract.id} className="border-[#E2E8F0]">
+                            <TableCell className="font-medium text-[#0F172A]">
                               {contract.customer_name}
                             </TableCell>
-                            <TableCell className="text-sm text-[#EDEDED]">
+                            <TableCell className="text-sm text-[#0F172A]">
                               {contract.service_description}
                             </TableCell>
-                            <TableCell className="text-sm text-[#EDEDED]">
+                            <TableCell className="text-sm text-[#0F172A]">
                               {contract.contract_start} ～ {contract.contract_end}
                             </TableCell>
-                            <TableCell className="text-right font-semibold text-[#EDEDED]">
+                            <TableCell className="text-right font-semibold text-[#0F172A]">
                               ¥
                               {contract.amount.toLocaleString('ja-JP')}
                             </TableCell>
@@ -201,7 +201,7 @@ export default function ContractsPage() {
                                   確認
                                 </Button>
                               ) : (
-                                <span className="text-sm text-[#888888]">-</span>
+                                <span className="text-sm text-[#64748B]">-</span>
                               )}
                             </TableCell>
                           </TableRow>

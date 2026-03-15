@@ -115,9 +115,9 @@ export default function UsersPage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
-          <h1 className="text-base font-semibold text-[#EDEDED]">ユーザー管理</h1>
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
+          <h1 className="text-base font-semibold text-[#0F172A]">ユーザー管理</h1>
         </div>
         <div className="px-6 py-6">
           <div className="flex justify-between items-center mb-8">
@@ -128,50 +128,50 @@ export default function UsersPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   アクティブユーザー
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-[#EDEDED]">{activeCount}</div>
+                <div className="text-2xl font-bold text-[#0F172A]">{activeCount}</div>
               </CardContent>
             </Card>
 
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   管理者
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-[#EDEDED]">{adminCount}</div>
+                <div className="text-2xl font-bold text-[#0F172A]">{adminCount}</div>
               </CardContent>
             </Card>
 
-            <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#888888]">
+                <CardTitle className="text-sm font-medium text-[#64748B]">
                   デベロッパー
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-[#EDEDED]">{developerCount}</div>
+                <div className="text-2xl font-bold text-[#0F172A]">{developerCount}</div>
               </CardContent>
             </Card>
           </div>
 
-          <Card className="bg-[#1A1A1A] border-[#2A2A2A]">
+          <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-[#EDEDED]">ユーザー一覧</CardTitle>
+                <CardTitle className="text-[#0F172A]">ユーザー一覧</CardTitle>
                 <Input
                   type="text"
                   placeholder="名前またはメール検索..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-64 bg-[#2A2A2A] border-[#3A3A3A] text-[#EDEDED] placeholder-[#666666]"
+                  className="w-64 bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8]"
                 />
               </div>
             </CardHeader>
@@ -179,33 +179,33 @@ export default function UsersPage() {
               {loading ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-12 bg-[#2A2A2A]" />
+                    <Skeleton key={i} className="h-12 bg-[#F8FAFC]" />
                   ))}
                 </div>
               ) : filteredUsers.length === 0 ? (
-                <p className="text-center text-[#888888] py-8">
+                <p className="text-center text-[#64748B] py-8">
                   ユーザーが見つかりません
                 </p>
               ) : (
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
-                      <TableRow className="border-[#2A2A2A]">
-                        <TableHead className="text-[#EDEDED]">名前</TableHead>
-                        <TableHead className="text-[#EDEDED]">メール</TableHead>
-                        <TableHead className="text-[#EDEDED]">権限</TableHead>
-                        <TableHead className="text-[#EDEDED]">ステータス</TableHead>
-                        <TableHead className="text-[#EDEDED]">作成日</TableHead>
-                        <TableHead className="text-[#EDEDED]">操作</TableHead>
+                      <TableRow className="border-[#E2E8F0]">
+                        <TableHead className="text-[#0F172A]">名前</TableHead>
+                        <TableHead className="text-[#0F172A]">メール</TableHead>
+                        <TableHead className="text-[#0F172A]">権限</TableHead>
+                        <TableHead className="text-[#0F172A]">ステータス</TableHead>
+                        <TableHead className="text-[#0F172A]">作成日</TableHead>
+                        <TableHead className="text-[#0F172A]">操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredUsers.map((u) => (
-                        <TableRow key={u.id} className="border-[#2A2A2A]">
-                          <TableCell className="font-medium text-[#EDEDED]">
+                        <TableRow key={u.id} className="border-[#E2E8F0]">
+                          <TableCell className="font-medium text-[#0F172A]">
                             {u.full_name}
                           </TableCell>
-                          <TableCell className="text-sm text-[#EDEDED]">
+                          <TableCell className="text-sm text-[#0F172A]">
                             {u.email}
                           </TableCell>
                           <TableCell>
@@ -220,7 +220,7 @@ export default function UsersPage() {
                               {u.status}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-sm text-[#EDEDED]">
+                          <TableCell className="text-sm text-[#0F172A]">
                             {new Date(u.created_at).toLocaleDateString('ja-JP')}
                           </TableCell>
                           <TableCell>

@@ -32,14 +32,14 @@ export default function OrdersPage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
-          <h1 className="text-base font-semibold text-[#EDEDED]">受注入力</h1>
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
+          <h1 className="text-base font-semibold text-[#0F172A]">受注入力</h1>
         </div>
         <div className="px-6 py-6">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <p className="text-[#888888] mt-1">新規受注を登録または管理します</p>
+              <p className="text-[#64748B] mt-1">新規受注を登録または管理します</p>
             </div>
             <Button onClick={() => setShowForm(!showForm)} className="gap-2">
               <Plus className="h-4 w-4" />
@@ -48,10 +48,10 @@ export default function OrdersPage() {
           </div>
 
           {showForm && (
-            <Card className="mb-8 bg-[#1A1A1A] border-[#2A2A2A]">
+            <Card className="mb-8 bg-[#FFFFFF] border-[#E2E8F0]">
               <CardHeader>
-                <CardTitle className="text-[#EDEDED]">新規受注情報</CardTitle>
-                <CardDescription className="text-[#888888]">以下の情報を入力して送信してください</CardDescription>
+                <CardTitle className="text-[#0F172A]">新規受注情報</CardTitle>
+                <CardDescription className="text-[#64748B]">以下の情報を入力して送信してください</CardDescription>
               </CardHeader>
               <CardContent>
                 <OrderForm onSuccess={handleOrderCreated} />

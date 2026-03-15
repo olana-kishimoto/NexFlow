@@ -21,12 +21,12 @@ export default function DashboardPage() {
     return (
       <div>
         <Navigation />
-        <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
+        <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
           <div className="px-6 py-6">
-            <Skeleton className="h-6 w-48 mb-8 bg-[#1A1A1A]" />
+            <Skeleton className="h-6 w-48 mb-8 bg-[#FFFFFF]" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <Skeleton key={i} className="h-32 bg-[#1A1A1A]" />
+                <Skeleton key={i} className="h-32 bg-[#FFFFFF]" />
               ))}
             </div>
           </div>
@@ -40,11 +40,11 @@ export default function DashboardPage() {
   return (
     <div>
       <Navigation />
-      <main className="ml-[220px] bg-[#0F0F0F] min-h-screen">
-        <div className="px-6 py-6 border-b border-[#2A2A2A]">
+      <main className="ml-[220px] bg-[#F8FAFC] min-h-screen">
+        <div className="px-6 py-6 border-b border-[#E2E8F0]">
           <div>
-            <h1 className="text-base font-semibold text-[#EDEDED]">ダッシュボード</h1>
-            <p className="text-13px text-[#888888] mt-2">
+            <h1 className="text-base font-semibold text-[#0F172A]">ダッシュボード</h1>
+            <p className="text-13px text-[#64748B] mt-2">
               {profile?.full_name} さんのホーム画面です（権限: {profile?.role}）
             </p>
           </div>
@@ -52,25 +52,25 @@ export default function DashboardPage() {
 
         <div className="px-6 py-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-              <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">
+            <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+              <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">
                 有効契約数
               </p>
-              <div className="text-20px font-semibold text-[#EDEDED] mt-2 font-mono">—</div>
+              <div className="text-20px font-semibold text-[#0F172A] mt-2 font-mono">—</div>
             </Card>
 
-            <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-              <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">
+            <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+              <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">
                 今月確定売上
               </p>
-              <div className="text-20px font-semibold text-[#EDEDED] mt-2 font-mono">¥—</div>
+              <div className="text-20px font-semibold text-[#0F172A] mt-2 font-mono">¥—</div>
             </Card>
 
-            <Card className="p-4 bg-[#1A1A1A] border border-[#2A2A2A]">
-              <p className="text-11px font-medium text-[#888888] uppercase tracking-wide">
+            <Card className="p-4 bg-[#FFFFFF] border border-[#E2E8F0]">
+              <p className="text-11px font-medium text-[#64748B] uppercase tracking-wide">
                 月次粗利
               </p>
-              <div className="text-20px font-semibold text-[#EDEDED] mt-2 font-mono">¥—</div>
+              <div className="text-20px font-semibold text-[#0F172A] mt-2 font-mono">¥—</div>
             </Card>
           </div>
         </div>
