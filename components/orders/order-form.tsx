@@ -73,7 +73,7 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
             ...formData,
             amount: parseFloat(formData.amount) || 0,
             tax_rate: parseFloat(formData.tax_rate) || 10,
-            commission_rate: formData.commission_rate ? parseFloat(formData.commission_rate) : null,
+            commission_rate: parseFloat(formData.commission_rate) || 0,
             payment_due_date: formData.payment_due_date || null,
             status: 'draft',
           },
