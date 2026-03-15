@@ -182,7 +182,7 @@ export default function OrdersManagePage() {
                   </TableHeader>
                   <TableBody>
                     {filteredOrders.map((order) => {
-                      const totalAmount = order.amount_before_tax * (1 + order.tax_rate / 100);
+                      const totalAmount = order.amount * (1 + order.tax_rate / 100);
 
                       return (
                         <TableRow key={order.id}>

@@ -24,7 +24,7 @@ export default function OrderList() {
         let query = supabase.from('orders').select('*');
 
         if (profile?.role === 'user') {
-          query = query.eq('user_id', user.id);
+          query = query.eq('created_by', user.id);
         }
 
         const { data, error } = await query.order('created_at', { ascending: false });
@@ -77,7 +77,7 @@ export default function OrderList() {
               <div>
                 <span className="text-gray-600">契約金額</span>
                 <p className="font-semibold">
-                  ¥{(order.amount_before_tax * (1 + order.tax_rate / 100)).toLocaleString()}
+                  ¥{(order.amount * (1 + order.tax_rate / 100)).toLocaleString()}
                 </p>
               </div>
               <div>

@@ -63,9 +63,9 @@ export default function RevenuePage() {
             revenue_amount,
             gross_profit,
             invoice_status,
-            cloudsign_status,
             mf_billing_id,
             contracts (
+              cloudsign_status,
               orders (
                 customer_name,
                 service_description,
@@ -83,7 +83,7 @@ export default function RevenuePage() {
           revenue_amount: r.revenue_amount,
           gross_profit: r.gross_profit,
           invoice_status: r.invoice_status,
-          cloudsign_status: r.cloudsign_status,
+          cloudsign_status: r.contracts?.cloudsign_status,
           mf_billing_id: r.mf_billing_id,
           customer_name: r.contracts?.orders?.customer_name || 'N/A',
           service_description: r.contracts?.orders?.service_description || 'N/A',

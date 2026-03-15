@@ -95,9 +95,9 @@ interface ContractPDFProps {
 }
 
 export const ContractPDF: React.FC<ContractPDFProps> = ({ order }) => {
-  const amountWithTax = order.amount_before_tax * (1 + order.tax_rate / 100);
-  const taxAmount = order.amount_before_tax * (order.tax_rate / 100);
-  const commissionAmount = order.amount_before_tax * ((order.agency_commission_rate || 0) / 100);
+  const amountWithTax = order.amount * (1 + order.tax_rate / 100);
+  const taxAmount = order.amount * (order.tax_rate / 100);
+  const commissionAmount = order.amount * ((order.commission_rate || 0) / 100);
 
   return (
     <Document>
@@ -126,16 +126,16 @@ export const ContractPDF: React.FC<ContractPDFProps> = ({ order }) => {
               <Text style={styles.value}>{order.representative_name}</Text>
             </View>
           )}
-          {order.postal_code && (
+          {order.customer_postal_code && (
             <View style={styles.row}>
               <Text style={styles.label}>郵便番号:</Text>
-              <Text style={styles.value}>{order.postal_code}</Text>
+              <Text style={styles.value}>{order.customer_postal_code}</Text>
             </View>
           )}
-          {order.address && (
+          {order.customer_address && (
             <View style={styles.row}>
               <Text style={styles.label}>住所:</Text>
-              <Text style={styles.value}>{order.address}</Text>
+              <Text style={styles.value}>{order.customer_address}</Text>
             </View>
           )}
           <View style={styles.row}>
@@ -175,12 +175,12 @@ export const ContractPDF: React.FC<ContractPDFProps> = ({ order }) => {
           <Text>{order.service_description}</Text>
         </View>
 
-        {order.special_terms && (
+        {order.special_notes && (
           <View style={styles.section}>
             <View style={styles.sectionTitle}>
               <Text>特約事項</Text>
             </View>
-            <Text>{order.special_terms}</Text>
+            <Text>{order.special_notes}</Text>
           </View>
         )}
 
@@ -193,7 +193,7 @@ export const ContractPDF: React.FC<ContractPDFProps> = ({ order }) => {
             <View style={styles.priceRow}>
               <Text style={styles.priceLabel}>受注金額（税抜）:</Text>
               <Text style={styles.priceValue}>
-                ¥{order.amount_before_tax.toLocaleString('ja-JP', { maximumFractionDigits: 2 })}
+                ¥{order.amount.toLocaleString('ja-JP', { maximumFractionDigits: 2 })}
               </Text>
             </View>
             <View style={styles.priceRow}>
@@ -209,11 +209,11 @@ export const ContractPDF: React.FC<ContractPDFProps> = ({ order }) => {
               </Text>
             </View>
 
-            {order.agency_commission_rate && (
+            {order.commission_rate && (
               <>
                 <View style={styles.priceRow}>
                   <Text style={styles.priceLabel}>代理店手数料率:</Text>
-                  <Text style={styles.priceValue}>{order.agency_commission_rate}%</Text>
+                  <Text style={styles.priceValue}>{order.commission_rate}%</Text>
                 </View>
                 <View style={styles.priceRow}>
                   <Text style={styles.priceLabel}>代理店手数料:</Text>

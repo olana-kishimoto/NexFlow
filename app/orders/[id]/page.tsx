@@ -37,7 +37,7 @@ export default function OrderDetailPage() {
           .eq('id', params.id as string);
 
         if (profile?.role === 'user') {
-          query = query.eq('user_id', user.id);
+          query = query.eq('created_by', user.id);
         }
 
         const { data, error } = await query.maybeSingle();
@@ -71,10 +71,10 @@ export default function OrderDetailPage() {
 
   if (!order) return null;
 
-  const amountWithTax = order.amount_before_tax * (1 + order.tax_rate / 100);
-  const taxAmount = order.amount_before_tax * (order.tax_rate / 100);
-  const commissionAmount = order.amount_before_tax * ((order.agency_commission_rate || 0) / 100);
-  const grossProfit = order.amount_before_tax * (1 - (order.agency_commission_rate || 0) / 100);
+  const amountWithTax = order.amount * (1 + order.tax_rate / 100);
+  const taxAmount = order.amount * (order.tax_rate / 100);
+  const commissionAmount = order.amount * ((order.commission_rate || 0) / 100);
+  const grossProfit = order.amount * (1 - (order.commission_rate || 0) / 100);
 
   return (
     <div>
@@ -114,16 +114,16 @@ export default function OrderDetailPage() {
                   <p className="font-semibold">{order.representative_name}</p>
                 </div>
               )}
-              {order.postal_code && (
+              {order.customer_postal_code && (
                 <div>
                   <span className="text-gray-600">郵便番号</span>
-                  <p className="font-semibold">{order.postal_code}</p>
+                  <p className="font-semibold">{order.customer_postal_code}</p>
                 </div>
               )}
-              {order.address && (
+              {order.customer_address && (
                 <div>
                   <span className="text-gray-600">住所</span>
-                  <p className="font-semibold">{order.address}</p>
+                  <p className="font-semibold">{order.customer_address}</p>
                 </div>
               )}
               <div>
@@ -171,13 +171,13 @@ export default function OrderDetailPage() {
           </CardContent>
         </Card>
 
-        {order.special_terms && (
+        {order.special_notes && (
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>特約事項</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="whitespace-pre-wrap">{order.special_terms}</p>
+              <p className="whitespace-pre-wrap">{order.special_notes}</p>
             </CardContent>
           </Card>
         )}
@@ -191,7 +191,7 @@ export default function OrderDetailPage() {
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">受注金額（税抜）</span>
                 <span className="font-semibold">
-                  ¥{order.amount_before_tax.toLocaleString('ja-JP', { maximumFractionDigits: 2 })}
+                  ¥{order.amount.toLocaleString('ja-JP', { maximumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
@@ -205,12 +205,12 @@ export default function OrderDetailPage() {
                 <span>¥{amountWithTax.toLocaleString('ja-JP', { maximumFractionDigits: 2 })}</span>
               </div>
 
-              {order.agency_commission_rate ? (
+              {order.commission_rate ? (
                 <>
                   <div className="border-t pt-3 mt-3">
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-600">代理店手数料率</span>
-                      <span className="font-semibold">{order.agency_commission_rate}%</span>
+                      <span className="font-semibold">{order.commission_rate}%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">代理店手数料</span>

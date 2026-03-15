@@ -20,17 +20,17 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
     customer_name: '',
     representative_title: '',
     representative_name: '',
-    address: '',
-    postal_code: '',
+    customer_address: '',
+    customer_postal_code: '',
     contact_email: '',
     contract_date: new Date().toISOString().split('T')[0],
     start_date: new Date().toISOString().split('T')[0],
     end_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
     service_description: '',
-    special_terms: '',
-    amount_before_tax: '',
+    special_notes: '',
+    amount: '',
     tax_rate: '10',
-    agency_commission_rate: '',
+    commission_rate: '',
     agency_name: '',
     payment_due_date: '',
   });
@@ -44,10 +44,10 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
     const updated = { ...formData, [name]: value };
     setFormData(updated);
 
-    if (name === 'amount_before_tax' || name === 'tax_rate' || name === 'agency_commission_rate') {
-      const amount = parseFloat(updated.amount_before_tax) || 0;
+    if (name === 'amount' || name === 'tax_rate' || name === 'commission_rate') {
+      const amount = parseFloat(updated.amount) || 0;
       const rate = parseFloat(updated.tax_rate) || 0;
-      const commissionRate = parseFloat(updated.agency_commission_rate) || 0;
+      const commissionRate = parseFloat(updated.commission_rate) || 0;
 
       const tax = amount * (rate / 100);
       const total = amount + tax;
@@ -70,11 +70,11 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
         .from('orders')
         .insert([
           {
-            user_id: user.id,
+            created_by: user.id,
             ...formData,
-            amount_before_tax: parseFloat(formData.amount_before_tax) || 0,
+            amount: parseFloat(formData.amount) || 0,
             tax_rate: parseFloat(formData.tax_rate) || 10,
-            agency_commission_rate: formData.agency_commission_rate ? parseFloat(formData.agency_commission_rate) : null,
+            commission_rate: formData.commission_rate ? parseFloat(formData.commission_rate) : null,
             payment_due_date: formData.payment_due_date || null,
             status: 'draft',
           },
@@ -88,17 +88,17 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
         customer_name: '',
         representative_title: '',
         representative_name: '',
-        address: '',
-        postal_code: '',
+        customer_address: '',
+        customer_postal_code: '',
         contact_email: '',
         contract_date: new Date().toISOString().split('T')[0],
         start_date: new Date().toISOString().split('T')[0],
         end_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
         service_description: '',
-        special_terms: '',
-        amount_before_tax: '',
+        special_notes: '',
+        amount: '',
         tax_rate: '10',
-        agency_commission_rate: '',
+        commission_rate: '',
         agency_name: '',
         payment_due_date: '',
       });
@@ -151,8 +151,8 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
             <label className="block text-sm font-medium mb-1">郵便番号</label>
             <Input
               type="text"
-              name="postal_code"
-              value={formData.postal_code}
+              name="customer_postal_code"
+              value={formData.customer_postal_code}
               onChange={handleChange}
               placeholder="100-0001"
             />
@@ -161,8 +161,8 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
             <label className="block text-sm font-medium mb-1">住所</label>
             <Input
               type="text"
-              name="address"
-              value={formData.address}
+              name="customer_address"
+              value={formData.customer_address}
               onChange={handleChange}
             />
           </div>
@@ -234,8 +234,8 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
           <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-1">特約事項</label>
             <Textarea
-              name="special_terms"
-              value={formData.special_terms}
+              name="special_notes"
+              value={formData.special_notes}
               onChange={handleChange}
               rows={3}
             />
@@ -250,8 +250,8 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
             <label className="block text-sm font-medium mb-1">受注金額（税抜） *</label>
             <Input
               type="number"
-              name="amount_before_tax"
-              value={formData.amount_before_tax}
+              name="amount"
+              value={formData.amount}
               onChange={handleChange}
               required
               step="0.01"
@@ -269,7 +269,7 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
           </div>
         </div>
 
-        {formData.amount_before_tax && (
+        {formData.amount && (
           <Card className="mt-4 bg-blue-50">
             <CardContent className="pt-6 space-y-2 text-sm">
               <div className="flex justify-between">
@@ -289,8 +289,8 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
             <label className="block text-sm font-medium mb-1">代理店手数料率 (%)</label>
             <Input
               type="number"
-              name="agency_commission_rate"
-              value={formData.agency_commission_rate}
+              name="commission_rate"
+              value={formData.commission_rate}
               onChange={handleChange}
               step="0.01"
             />

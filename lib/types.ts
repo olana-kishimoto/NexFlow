@@ -16,21 +16,21 @@ export interface Profile {
 
 export interface Order {
   id: string;
-  user_id: string;
+  created_by: string;
   customer_name: string;
   representative_title?: string;
   representative_name?: string;
-  address?: string;
-  postal_code?: string;
+  customer_address?: string;
+  customer_postal_code?: string;
   contact_email: string;
   contract_date: string;
   start_date: string;
   end_date: string;
   service_description: string;
-  special_terms?: string;
-  amount_before_tax: number;
+  special_notes?: string;
+  amount: number;
   tax_rate: number;
-  agency_commission_rate?: number;
+  commission_rate?: number;
   agency_name?: string;
   payment_due_date?: string;
   status: OrderStatus;

@@ -25,8 +25,8 @@ interface ContractDetail {
   cloudsign_status: string;
   contract_start: string;
   contract_end: string;
-  amount_before_tax: number;
-  agency_commission_rate?: number;
+  amount: number;
+  commission_rate?: number;
 }
 
 export default function ContractsPage() {
@@ -61,8 +61,8 @@ export default function ContractsPage() {
             orders (
               customer_name,
               service_description,
-              amount_before_tax,
-              agency_commission_rate
+              amount,
+              commission_rate
             )
           `)
           .not('cloudsign_document_id', 'is', null);
@@ -76,8 +76,8 @@ export default function ContractsPage() {
           cloudsign_status: c.cloudsign_status,
           contract_start: c.contract_start,
           contract_end: c.contract_end,
-          amount_before_tax: c.orders?.amount_before_tax || 0,
-          agency_commission_rate: c.orders?.agency_commission_rate,
+          amount: c.orders?.amount || 0,
+          commission_rate: c.orders?.commission_rate,
         }));
 
         setContracts(formatted);
@@ -160,8 +160,8 @@ export default function ContractsPage() {
                   <TableBody>
                     {contracts.map((contract) => {
                       const grossProfit =
-                        contract.amount_before_tax *
-                        (1 - (contract.agency_commission_rate || 0) / 100);
+                        contract.amount *
+                        (1 - (contract.commission_rate || 0) / 100);
 
                       return (
                         <TableRow key={contract.id}>
@@ -176,7 +176,7 @@ export default function ContractsPage() {
                           </TableCell>
                           <TableCell className="text-right font-semibold">
                             ¥
-                            {contract.amount_before_tax.toLocaleString('ja-JP')}
+                            {contract.amount.toLocaleString('ja-JP')}
                           </TableCell>
                           <TableCell className="text-right font-semibold text-green-600">
                             ¥{grossProfit.toLocaleString('ja-JP')}
