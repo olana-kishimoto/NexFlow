@@ -142,8 +142,7 @@ async function addBillingItem(
 
 export async function createMFInvoice(
   revenueId: string,
-  contractId: string,
-  partnerName: string,
+  customerId: string,
   serviceDescription: string,
   amount: number,
   targetMonth: string,
@@ -181,6 +180,30 @@ export async function createMFInvoice(
     const config = await getMFSettings();
     if (!config.MF_OFFICE_ID) {
       throw new Error('MF_OFFICE_ID not configured');
+    }
+
+    // Get customer data and check/create MF partner
+    const { data: customer } = await supabaseServer
+      .from('customers')
+      .select('customer_name, mf_partner_id')
+      .eq('id', customerId)
+      .maybeSingle();
+
+    if (!customer) {
+      throw new Error('Customer not found');
+    }
+
+    let partnerId = customer.mf_partner_id;
+
+    // If partner doesn't exist in MF, create it
+    if (!partnerId) {
+      partnerId = await createPartner(currentAccessToken, customer.customer_name);
+
+      // Save the partner ID to the customer record
+      await supabaseServer
+        .from('customers')
+        .update({ mf_partner_id: partnerId })
+        .eq('id', customerId);
     }
 
     const billingDate = new Date(targetMonth).toISOString().split('T')[0];

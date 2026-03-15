@@ -67,9 +67,10 @@ export default function RevenuePage() {
             contracts (
               cloudsign_status,
               orders (
-                customer_name,
                 service_description,
-                agency_name
+                customers (
+                  customer_name
+                )
               )
             )
           `)
@@ -85,9 +86,9 @@ export default function RevenuePage() {
           invoice_status: r.invoice_status,
           cloudsign_status: r.contracts?.cloudsign_status,
           mf_billing_id: r.mf_billing_id,
-          customer_name: r.contracts?.orders?.customer_name || 'N/A',
+          customer_name: r.contracts?.orders?.customers?.customer_name || 'N/A',
           service_description: r.contracts?.orders?.service_description || 'N/A',
-          agency_name: r.contracts?.orders?.agency_name,
+          agency_name: r.contracts?.orders?.customers?.agency_name,
         }));
 
         setRevenues(formatted);

@@ -45,11 +45,32 @@ export default function OrdersManagePage() {
       try {
         const { data, error } = await supabase
           .from('orders')
-          .select('*')
+          .select(`
+            *,
+            customers (
+              customer_name,
+              representative_title,
+              representative_name,
+              customer_address,
+              customer_postal_code,
+              contact_email,
+              agency_name
+            )
+          `)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setOrders(data || []);
+        const formatted = (data || []).map((order: any) => ({
+          ...order,
+          customer_name: order.customers?.customer_name || 'N/A',
+          representative_title: order.customers?.representative_title,
+          representative_name: order.customers?.representative_name,
+          customer_address: order.customers?.customer_address,
+          customer_postal_code: order.customers?.customer_postal_code,
+          contact_email: order.customers?.contact_email,
+          agency_name: order.customers?.agency_name,
+        }));
+        setOrders(formatted);
       } finally {
         setLoading(false);
       }
@@ -76,8 +97,8 @@ export default function OrdersManagePage() {
 
   const filteredOrders = orders.filter(
     (o) =>
-      o.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      o.contact_email.toLowerCase().includes(searchTerm.toLowerCase())
+      (o.customer_name?.toLowerCase() ?? '').includes(searchTerm.toLowerCase()) ||
+      (o.contact_email?.toLowerCase() ?? '').includes(searchTerm.toLowerCase())
   );
 
   const statusCounts = {

@@ -14,15 +14,27 @@ export interface Profile {
   updated_at: string;
 }
 
-export interface Order {
+export interface Customer {
   id: string;
-  created_by: string;
+  customer_code?: string;
   customer_name: string;
   representative_title?: string;
   representative_name?: string;
   customer_address?: string;
   customer_postal_code?: string;
-  contact_email: string;
+  contact_email?: string;
+  agency_name?: string;
+  mf_partner_id?: string;
+  notes?: string;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Order {
+  id: string;
+  customer_id: string;
+  created_by: string;
   contract_date: string;
   start_date: string;
   end_date: string;
@@ -31,11 +43,18 @@ export interface Order {
   amount: number;
   tax_rate: number;
   commission_rate?: number;
-  agency_name?: string;
   payment_due_date?: string;
   status: OrderStatus;
   created_at: string;
   updated_at: string;
+  // Customer data (for display - joined from customers table)
+  customer_name?: string;
+  representative_title?: string;
+  representative_name?: string;
+  customer_address?: string;
+  customer_postal_code?: string;
+  contact_email?: string;
+  agency_name?: string;
 }
 
 export interface Contract {

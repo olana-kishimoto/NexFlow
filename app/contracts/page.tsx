@@ -59,10 +59,12 @@ export default function ContractsPage() {
             contract_start,
             contract_end,
             orders (
-              customer_name,
               service_description,
               amount,
-              commission_rate
+              commission_rate,
+              customers (
+                customer_name
+              )
             )
           `)
           .not('cloudsign_document_id', 'is', null);
@@ -71,7 +73,7 @@ export default function ContractsPage() {
 
         const formatted: ContractDetail[] = (data || []).map((c: any) => ({
           id: c.id,
-          customer_name: c.orders?.customer_name || 'N/A',
+          customer_name: c.orders?.customers?.customer_name || 'N/A',
           service_description: c.orders?.service_description || 'N/A',
           cloudsign_status: c.cloudsign_status,
           contract_start: c.contract_start,

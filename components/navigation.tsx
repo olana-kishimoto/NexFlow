@@ -23,6 +23,7 @@ export function Navigation() {
   const navItems = [
     { label: '受注入力', href: '/orders', roles: ['user', 'admin', 'developer'] },
     { label: '受注管理', href: '/orders-manage', roles: ['admin', 'developer'] },
+    { label: '得意先管理', href: '/customers', roles: ['admin', 'developer'] },
     { label: '売上管理', href: '/revenue', roles: ['admin', 'developer'] },
     { label: 'ダッシュボード', href: '/dashboard', roles: ['admin', 'developer'] },
     { label: '契約管理', href: '/contracts', roles: ['admin', 'developer'] },

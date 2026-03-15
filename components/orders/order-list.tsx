@@ -21,7 +21,18 @@ export default function OrderList() {
       if (!user) return;
 
       try {
-        let query = supabase.from('orders').select('*');
+        let query = supabase.from('orders').select(`
+          *,
+          customers (
+            customer_name,
+            representative_title,
+            representative_name,
+            customer_address,
+            customer_postal_code,
+            contact_email,
+            agency_name
+          )
+        `);
 
         if (profile?.role === 'user') {
           query = query.eq('created_by', user.id);
@@ -30,7 +41,17 @@ export default function OrderList() {
         const { data, error } = await query.order('created_at', { ascending: false });
 
         if (error) throw error;
-        setOrders(data || []);
+        const formatted = (data || []).map((order: any) => ({
+          ...order,
+          customer_name: order.customers?.customer_name || 'N/A',
+          representative_title: order.customers?.representative_title,
+          representative_name: order.customers?.representative_name,
+          customer_address: order.customers?.customer_address,
+          customer_postal_code: order.customers?.customer_postal_code,
+          contact_email: order.customers?.contact_email,
+          agency_name: order.customers?.agency_name,
+        }));
+        setOrders(formatted);
       } finally {
         setLoading(false);
       }

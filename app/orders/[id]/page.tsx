@@ -33,7 +33,18 @@ export default function OrderDetailPage() {
       try {
         let query = supabase
           .from('orders')
-          .select('*')
+          .select(`
+            *,
+            customers (
+              customer_name,
+              representative_title,
+              representative_name,
+              customer_address,
+              customer_postal_code,
+              contact_email,
+              agency_name
+            )
+          `)
           .eq('id', params.id as string);
 
         if (profile?.role === 'user') {
@@ -48,7 +59,18 @@ export default function OrderDetailPage() {
           return;
         }
 
-        setOrder(data);
+        const formatted = {
+          ...data,
+          customer_name: data.customers?.customer_name || 'N/A',
+          representative_title: data.customers?.representative_title,
+          representative_name: data.customers?.representative_name,
+          customer_address: data.customers?.customer_address,
+          customer_postal_code: data.customers?.customer_postal_code,
+          contact_email: data.customers?.contact_email,
+          agency_name: data.customers?.agency_name,
+        };
+
+        setOrder(formatted);
       } finally {
         setLoading(false);
       }

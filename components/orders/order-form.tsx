@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
+import { Customer } from '@/lib/types';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
+import CustomerSelector from '@/components/customers/customer-selector';
 
 interface OrderFormProps {
   onSuccess?: () => void;
@@ -16,13 +18,8 @@ interface OrderFormProps {
 export default function OrderForm({ onSuccess }: OrderFormProps) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [formData, setFormData] = useState({
-    customer_name: '',
-    representative_title: '',
-    representative_name: '',
-    customer_address: '',
-    customer_postal_code: '',
-    contact_email: '',
     contract_date: new Date().toISOString().split('T')[0],
     start_date: new Date().toISOString().split('T')[0],
     end_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
@@ -31,7 +28,6 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
     amount: '',
     tax_rate: '10',
     commission_rate: '',
-    agency_name: '',
     payment_due_date: '',
   });
 
@@ -65,11 +61,13 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
 
     try {
       if (!user) throw new Error('未認証');
+      if (!selectedCustomer) throw new Error('得意先を選択してください');
 
       const { data, error } = await supabase
         .from('orders')
         .insert([
           {
+            customer_id: selectedCustomer.id,
             created_by: user.id,
             ...formData,
             amount: parseFloat(formData.amount) || 0,
@@ -85,12 +83,6 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
 
       toast({ title: 'success', description: '受注を作成しました' });
       setFormData({
-        customer_name: '',
-        representative_title: '',
-        representative_name: '',
-        customer_address: '',
-        customer_postal_code: '',
-        contact_email: '',
         contract_date: new Date().toISOString().split('T')[0],
         start_date: new Date().toISOString().split('T')[0],
         end_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
@@ -99,9 +91,9 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
         amount: '',
         tax_rate: '10',
         commission_rate: '',
-        agency_name: '',
         payment_due_date: '',
       });
+      setSelectedCustomer(null);
       onSuccess?.();
     } catch (error) {
       toast({
@@ -117,66 +109,11 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold mb-4">顧客情報</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">顧客名 *</label>
-            <Input
-              type="text"
-              name="customer_name"
-              value={formData.customer_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">代表者職名</label>
-            <Input
-              type="text"
-              name="representative_title"
-              value={formData.representative_title}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">代表者氏名</label>
-            <Input
-              type="text"
-              name="representative_name"
-              value={formData.representative_name}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">郵便番号</label>
-            <Input
-              type="text"
-              name="customer_postal_code"
-              value={formData.customer_postal_code}
-              onChange={handleChange}
-              placeholder="100-0001"
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-1">住所</label>
-            <Input
-              type="text"
-              name="customer_address"
-              value={formData.customer_address}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-1">担当メール *</label>
-            <Input
-              type="email"
-              name="contact_email"
-              value={formData.contact_email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
+        <h3 className="text-lg font-semibold mb-4">得意先選択 *</h3>
+        <CustomerSelector
+          onSelect={setSelectedCustomer}
+          selectedCustomerId={selectedCustomer?.id}
+        />
       </div>
 
       <div>
@@ -284,26 +221,15 @@ export default function OrderForm({ onSuccess }: OrderFormProps) {
           </Card>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">代理店手数料率 (%)</label>
-            <Input
-              type="number"
-              name="commission_rate"
-              value={formData.commission_rate}
-              onChange={handleChange}
-              step="0.01"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">代理店名</label>
-            <Input
-              type="text"
-              name="agency_name"
-              value={formData.agency_name}
-              onChange={handleChange}
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">代理店手数料率 (%)</label>
+          <Input
+            type="number"
+            name="commission_rate"
+            value={formData.commission_rate}
+            onChange={handleChange}
+            step="0.01"
+          />
         </div>
 
         {grossProfit > 0 && (
