@@ -1,9 +1,11 @@
 'use server';
 
-import { supabaseServer } from '@/lib/supabase';
+import { getSupabaseServerClient } from '@/lib/supabase/server';
 import { renderToStream } from '@react-pdf/renderer';
 import { ContractPDF } from '@/components/contract/contract-pdf';
 import React from 'react';
+
+const supabaseServer = getSupabaseServerClient();
 
 async function getCloudSignToken(): Promise<string> {
   const { data: settings } = await supabaseServer

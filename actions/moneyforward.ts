@@ -1,6 +1,8 @@
 'use server';
 
-import { supabaseServer } from '@/lib/supabase';
+import { getSupabaseServerClient } from '@/lib/supabase/server';
+
+const supabaseServer = getSupabaseServerClient();
 
 interface MFBillingItem {
   name: string;

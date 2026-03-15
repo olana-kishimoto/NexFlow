@@ -20,7 +20,7 @@ export default function AuthPage() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -29,15 +29,20 @@ export default function AuthPage() {
         toast.error('ログインに失敗しました', {
           description: error.message,
         });
-      } else {
+        setLoading(false);
+        return;
+      }
+
+      if (data.session) {
         toast.success('ログインしました');
-        router.push('/dashboard');
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 500);
       }
     } catch (error: any) {
       toast.error('ログインに失敗しました', {
         description: error.message || 'エラーが発生しました',
       });
-    } finally {
       setLoading(false);
     }
   };

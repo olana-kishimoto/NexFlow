@@ -57,7 +57,7 @@ export default function SettingsPage() {
         if (error) throw error;
 
         const settingsMap: Record<string, string> = {};
-        data?.forEach((s) => {
+        data?.forEach((s: any) => {
           settingsMap[s.key] = s.value;
         });
 
