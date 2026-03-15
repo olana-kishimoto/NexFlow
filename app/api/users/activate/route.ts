@@ -44,13 +44,23 @@ export async function POST(req: NextRequest) {
 
     const adminClient = createAdminClient(supabaseUrl, serviceRoleKey)
 
-    const { error } = await adminClient.auth.admin.updateUserById(userId, {
+    const { error: authError } = await adminClient.auth.admin.updateUserById(userId, {
       ban_duration: 'none',
     })
 
-    if (error) {
-      console.error('Activate user error:', error)
-      return NextResponse.json({ error: error.message }, { status: 400 })
+    if (authError) {
+      console.error('Activate user error:', authError)
+      return NextResponse.json({ error: authError.message }, { status: 400 })
+    }
+
+    const { error: dbError } = await supabase
+      .from('profiles')
+      .update({ is_suspended: false })
+      .eq('id', userId)
+
+    if (dbError) {
+      console.error('Update profile error:', dbError)
+      return NextResponse.json({ error: dbError.message }, { status: 400 })
     }
 
     return NextResponse.json({ success: true })

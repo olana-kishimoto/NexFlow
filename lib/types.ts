@@ -1,6 +1,6 @@
 export type UserRole = 'developer' | 'admin' | 'user';
 export type UserStatus = 'active' | 'inactive' | 'suspended';
-export type OrderStatus = 'draft' | 'submitted' | 'cancelled';
+export type OrderStatus = 'draft' | 'active' | 'void' | 'cancelled';
 export type CloudSignStatus = 'draft' | 'sent' | 'signed' | 'expired' | 'cancelled';
 export type InvoiceStatus = 'pending' | 'invoiced' | 'cancelled';
 
@@ -9,6 +9,7 @@ export interface Profile {
   email: string;
   full_name: string;
   role: UserRole;
+  is_suspended: boolean;
   created_at: string;
   updated_at: string;
 }

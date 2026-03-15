@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus } from 'lucide-react';
-import OrderForm from '@/components/orders/order-form';
-import OrderList from '@/components/orders/order-list';
+import { OrderFormNew } from '@/components/orders/order-form-new';
+import { OrderListNew } from '@/components/orders/order-list-new';
 
 export default function OrdersPage() {
   const { user, loading } = useAuth();
@@ -54,12 +54,12 @@ export default function OrdersPage() {
                 <CardDescription className="text-[#64748B]">以下の情報を入力して送信してください</CardDescription>
               </CardHeader>
               <CardContent>
-                <OrderForm onSuccess={handleOrderCreated} />
+                <OrderFormNew />
               </CardContent>
             </Card>
           )}
 
-          <OrderList key={refreshKey} />
+          <OrderListNew key={refreshKey} />
         </div>
       </main>
     </div>

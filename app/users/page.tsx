@@ -135,7 +135,7 @@ export default function UsersPage() {
       u.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const activeCount = users.length;
+  const activeCount = users.filter((u) => !u.is_suspended).length;
   const adminCount = users.filter((u) => u.role === 'admin').length;
   const developerCount = users.filter((u) => u.role === 'developer').length;
 
@@ -245,7 +245,11 @@ export default function UsersPage() {
                             <Badge variant="outline">{u.role}</Badge>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="default">有効</Badge>
+                            {u.is_suspended ? (
+                              <Badge className="bg-red-100 text-red-700">停止中</Badge>
+                            ) : (
+                              <Badge className="bg-green-100 text-green-700">有効</Badge>
+                            )}
                           </TableCell>
                           <TableCell className="text-sm text-[#0F172A]">
                             {new Date(u.created_at).toLocaleDateString('ja-JP')}
@@ -254,9 +258,10 @@ export default function UsersPage() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleToggleStatus(u.id, false)}
+                              onClick={() => handleToggleStatus(u.id, u.is_suspended)}
+                              className={u.is_suspended ? "text-green-600" : "text-red-600"}
                             >
-                              停止
+                              {u.is_suspended ? '有効化' : '停止'}
                             </Button>
                           </TableCell>
                         </TableRow>

@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Eye, EyeOff } from 'lucide-react';
 
 interface UserAddDialogProps {
   isOpen: boolean;
@@ -28,6 +29,7 @@ interface UserAddDialogProps {
 
 export function UserAddDialog({ isOpen, onOpenChange, onSuccess }: UserAddDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     full_name: '',
@@ -78,8 +80,8 @@ export function UserAddDialog({ isOpen, onOpenChange, onSuccess }: UserAddDialog
       }
 
       toast({
-        title: '成功',
-        description: 'ユーザーを追加しました',
+        title: 'ユーザーを追加しました',
+        description: `メール: ${formData.email}\n初期パスワード: ${formData.password}\n本人にパスワードの変更を案内してください。`,
       });
 
       setFormData({
@@ -144,14 +146,27 @@ export function UserAddDialog({ isOpen, onOpenChange, onSuccess }: UserAddDialog
             <Label htmlFor="password" className="text-13px font-medium text-[#0F172A]">
               パスワード <span className="text-red-500">*</span>
             </Label>
-            <Input
-              id="password"
-              type="password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              placeholder="最低8文字"
-              className="bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8]"
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                placeholder="最低8文字"
+                className="bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#0F172A]"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
 
           <div className="space-y-2">
