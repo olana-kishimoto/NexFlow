@@ -19,7 +19,7 @@ interface FormData {
   end_date: string;
   payment_due_date: string;
   service_description: string;
-  special_terms: string;
+  special_notes: string;
   amount: string;
   tax_rate: string;
   commission_rate: string;
@@ -39,7 +39,7 @@ interface Order {
   end_date: string;
   payment_due_date: string;
   service_description: string;
-  special_terms: string;
+  special_notes: string;
   amount: number;
   tax_rate: number;
   commission_rate: number;
@@ -65,7 +65,7 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
     end_date: '',
     payment_due_date: '',
     service_description: '',
-    special_terms: '',
+    special_notes: '',
     amount: '',
     tax_rate: '',
     commission_rate: '',
@@ -120,7 +120,7 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
         end_date: data.end_date,
         payment_due_date: data.payment_due_date,
         service_description: data.service_description,
-        special_terms: data.special_terms || '',
+        special_notes: data.special_notes || '',
         amount: data.amount.toString(),
         tax_rate: data.tax_rate.toString(),
         commission_rate: data.commission_rate.toString(),
@@ -203,7 +203,7 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
           end_date: formData.end_date,
           payment_due_date: formData.payment_due_date,
           service_description: formData.service_description,
-          special_terms: formData.special_terms || null,
+          special_notes: formData.special_notes || null,
           amount: parseFloat(formData.amount) || 0,
           tax_rate: parseFloat(formData.tax_rate) || 10,
           commission_rate: parseFloat(formData.commission_rate) || 0,
@@ -335,14 +335,14 @@ export function OrderFormEdit({ orderId }: { orderId: string }) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="special_terms" className="text-13px font-medium text-[#0F172A]">
+            <Label htmlFor="special_notes" className="text-13px font-medium text-[#0F172A]">
               特約事項
             </Label>
             <Textarea
-              id="special_terms"
+              id="special_notes"
               placeholder="特約事項があれば入力してください"
-              value={formData.special_terms}
-              onChange={(e) => setFormData({ ...formData, special_terms: e.target.value })}
+              value={formData.special_notes}
+              onChange={(e) => setFormData({ ...formData, special_notes: e.target.value })}
               className="bg-[#FFFFFF] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] text-13px min-h-24"
             />
           </div>
