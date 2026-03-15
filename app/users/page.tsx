@@ -21,6 +21,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Plus } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Profile } from '@/lib/types';
+import { UserAddDialog } from '@/components/users/user-add-dialog';
 
 export default function UsersPage() {
   const { user, profile, loading: authLoading } = useAuth();
@@ -28,6 +29,7 @@ export default function UsersPage() {
   const [users, setUsers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -86,6 +88,21 @@ export default function UsersPage() {
     }
   };
 
+  const handleUserAdded = async () => {
+    const supabase = createClient();
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setUsers(data || []);
+    } catch (error) {
+      console.error('Failed to refresh users:', error);
+    }
+  };
+
   if (authLoading) {
     return (
       <div>
@@ -121,11 +138,17 @@ export default function UsersPage() {
         </div>
         <div className="px-6 py-6">
           <div className="flex justify-between items-center mb-8">
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={() => setIsDialogOpen(true)}>
               <Plus className="h-4 w-4" />
               新規ユーザー
             </Button>
           </div>
+
+          <UserAddDialog
+            isOpen={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+            onSuccess={handleUserAdded}
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card className="bg-[#FFFFFF] border-[#E2E8F0]">
